@@ -1,35 +1,82 @@
-import { mongoose } from "mongoose";
+import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
+// User Schema
+const userSchema = new Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      // Make sure to hash passwords before saving
+      type: String,
+      required: true,
+    },
+    // Include any other user fields you may need
+  },
+  { timestamps: true },
+);
+
+// Entry Schema
 const entrySchema = new Schema(
   {
     date: {
       type: Date,
       required: true,
     },
-    type: {
+    title: {
       type: String,
-      enum: ["work", "learning", "interesting-thing"],
       required: true,
     },
     text: {
       type: String,
       required: true,
     },
+    location: {
+      name: {
+        type: String,
+        required: true,
+      },
+      street: {
+        type: String,
+        required: true,
+      },
+      zip: {
+        type: Number,
+        required: true,
+      },
+      city: {
+        type: String,
+        required: true,
+      },
+    },
+    attendees: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    // Other fields as necessary
   },
-  // Automatically add `createdAt` and `updatedAt` timestamps:
-  // https://mongoosejs.com/docs/timestamps.html
   { timestamps: true },
 );
 
-// For each model you want to create, please define the model's name, the
-// associated schema (defined above), and the name of the associated collection
-// in the database (which will be created automatically).
+// Create models
+// const UserModel = mongoose.model("User", userSchema, "users");
+// const EntryModel = mongoose.model("Entry", entrySchema, "entries");
+
+// Export models
 export const models = [
-  {
-    name: "Entry",
-    schema: entrySchema,
-    collection: "entries",
-  },
+  { name: "User", schema: userSchema, collection: "users" },
+  { name: "Entry", schema: entrySchema, collection: "entries" },
 ];
+
+// export { UserModel, EntryModel };
