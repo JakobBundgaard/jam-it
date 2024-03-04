@@ -20,6 +20,8 @@ async function insertData() {
         zip: 90120,
         city: "Harmony Haven",
       },
+      userID: "65e5d00230c4147b8f2046be",
+      attendees: ["65e5d3b730c4147b8f2046f7", "65e5d69230c4147b8f20470f"],
     },
     {
       date: new Date("2024-01-15"),
@@ -31,6 +33,8 @@ async function insertData() {
         zip: 80456,
         city: "Bassline Borough",
       },
+      userID: "65e5d3b730c4147b8f2046f7",
+      attendees: ["65e5d00230c4147b8f2046be", "65e5d69230c4147b8f20470f"],
     },
     {
       date: new Date("2024-02-01"),
@@ -42,28 +46,8 @@ async function insertData() {
         zip: 70089,
         city: "Melodic Meadow",
       },
-    },
-    {
-      date: new Date("2024-02-15"),
-      title: "Jazz & Java",
-      text: "A cozy coffeehouse jazz session. Bring your sax or just come to enjoy.",
-      location: {
-        name: "Caffeine Corner",
-        street: "Swing Street 78",
-        zip: 60234,
-        city: "Jazz Junction",
-      },
-    },
-    {
-      date: new Date("2024-02-22"),
-      title: "Rock Rendezvous",
-      text: "Let's rock this town! Guitars, drums, and rock spirit required.",
-      location: {
-        name: "Rock Realm",
-        street: "Plectrum Place 90",
-        zip: 50367,
-        city: "Riff Ridge",
-      },
+      userID: "65e5d69230c4147b8f20470f",
+      attendees: ["65e5d00230c4147b8f2046be", "65e5d3b730c4147b8f2046f7"],
     },
   ];
 

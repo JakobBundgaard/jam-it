@@ -22,7 +22,9 @@ authenticator.use(
       throw new AuthorizationError("Bad Credentials: Email is required");
     }
     if (typeof email !== "string") {
-      throw new AuthorizationError("Bad Credentials: Email must be a string");
+      throw new AuthorizationError(
+        "Bad Credentials: Email must be a valid email",
+      );
     }
 
     if (!password || password?.length === 0) {
