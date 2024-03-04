@@ -58,6 +58,10 @@ const entrySchema = new Schema(
         required: true,
       },
     },
+    userID: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
     attendees: [
       {
         type: Schema.Types.ObjectId,
