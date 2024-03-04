@@ -1,6 +1,6 @@
 import {
   Links,
-  Link,
+  // Link,
   LiveReload,
   Meta,
   Outlet,
@@ -17,7 +17,7 @@ export const links = () => [
 ];
 
 export function meta() {
-  return [{ title: "Work Journal" }];
+  return [{ title: "Jam It" }];
 }
 
 export default function App() {
