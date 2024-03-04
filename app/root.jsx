@@ -6,8 +6,11 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "@remix-run/react";
 import styles from "./tailwind.css";
+import { authenticator } from "./services/auth.server";
+import Nav from "./components/Nav";
 
 export const links = () => [
   {
@@ -20,7 +23,13 @@ export function meta() {
   return [{ title: "Jam It" }];
 }
 
+export async function loader({ request }) {
+  return await authenticator.isAuthenticated(request);
+}
+
 export default function App() {
+  const user = useLoaderData();
+
   return (
     <html lang="en">
       <head>
@@ -30,6 +39,7 @@ export default function App() {
         <Links />
       </head>
       <body>
+        {user ? <Nav /> : null}
         <Outlet />
         <ScrollRestoration />
         <Scripts />

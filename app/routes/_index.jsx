@@ -3,8 +3,13 @@ import { useLoaderData, useFetcher } from "@remix-run/react";
 import mongoose from "mongoose";
 import { useEffect, useRef } from "react";
 import { format } from "date-fns"; // Ensure you have date-fns installed for formatting dates
+import { authenticator } from "../services/auth.server";
 
-export async function loader() {
+export async function loader({ request }) {
+  await authenticator.isAuthenticated(request, {
+    failureRedirect: "/signin",
+  });
+
   const entries = await mongoose.models.Entry.find({});
   return json({ entries });
 }

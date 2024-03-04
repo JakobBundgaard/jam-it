@@ -15,6 +15,22 @@ authenticator.use(
     const password = form.get("password");
     let user = null;
 
+    if (!mail || mail?.length === 0) {
+      throw new AuthorizationError("Bad Credentials: Email is required");
+    }
+    if (typeof mail !== "string") {
+      throw new AuthorizationError("Bad Credentials: Email must be a string");
+    }
+
+    if (!password || password?.length === 0) {
+      throw new AuthorizationError("Bad Credentials: Password is required");
+    }
+    if (typeof password !== "string") {
+      throw new AuthorizationError(
+        "Bad Credentials: Password must be a string",
+      );
+    }
+
     // login the user, this could be whatever process you want
     if (mail === "jake@mail.com" && password === "1111") {
       user = {
