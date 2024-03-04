@@ -23,15 +23,7 @@ export default function Nav() {
       >
         Add Jam
       </NavLink>
-      {/* Uncomment if you have a users route */}
-      {/* <NavLink
-          to="/users"
-          className={({ isActive }) =>
-            isActive ? 'text-slate-900 font-bold' : 'text-slate-600 hover:text-slate-900'
-          }
-        >
-          Users
-        </NavLink> */}
+
       <NavLink
         to="/profile"
         className={({ isActive }) =>
