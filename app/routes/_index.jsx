@@ -117,12 +117,16 @@ export default function Index() {
 
       {entries.map((entry) => (
         <div key={entry._id} className="mt-4">
-          <p className="font-bold">{entry.title}</p>
-          <p>{new Date(entry.date).toLocaleString()}</p>
+          <p className="font-bold p-1">{entry.title}</p>
+          <p className="p-1">{new Date(entry.date).toLocaleString()}</p>
 
-          <p>{entry.text}</p>
-          <p className="italic text-gray-400">
-            {entry.location.name}, {entry.location.city}
+          <p className=" text-gray-500 p-1">{entry.text}</p>
+          <p className="text-xl italic text-gray-900 p-1">
+            {entry.location.name}
+          </p>
+          <p className=" text-gray-700 p-1">{entry.location.street}</p>
+          <p className=" text-gray-700 p-1">
+            {entry.location.zip} , {entry.location.city}
           </p>
         </div>
       ))}
