@@ -30,8 +30,13 @@ export default function UpdateJam() {
   const { jam } = useLoaderData();
   const fetcher = useFetcher();
   const textareaRef = useRef(null);
-  //   const [image, setImage] = useState(post.image);
   const navigate = useNavigate();
+
+  // Adjust date for local timezone to use as defaultValue
+  const eventDate = new Date(jam.date);
+  const timeZoneOffset = eventDate.getTimezoneOffset();
+  eventDate.setMinutes(eventDate.getMinutes() - timeZoneOffset);
+  const localDateTimeString = eventDate.toISOString().slice(0, 16);
 
   function handleCancel() {
     navigate(-1);
@@ -54,7 +59,7 @@ export default function UpdateJam() {
                   name="date"
                   required
                   className="text-gray-900 p-1"
-                  defaultValue={new Date(jam.date).toISOString().slice(0, 16)}
+                  defaultValue={localDateTimeString} // Set the adjusted local date time as defaultValue
                 />
               </div>
 
