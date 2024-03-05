@@ -1,4 +1,4 @@
-import { Form, useLoaderData } from "@remix-run/react";
+import { Link, Form, useLoaderData } from "@remix-run/react";
 import { authenticator } from "../services/auth.server";
 import mongoose from "mongoose";
 
@@ -7,9 +7,6 @@ export async function loader({ request }) {
     failureRedirect: "/signin",
   });
 
-  // const entries = await mongoose.models.Entry.find({ userID: user._id }).exec();
-
-  // return { user, entries };
   const hostedJams = await mongoose.models.Entry.find({
     userID: user._id,
   }).exec();
@@ -31,19 +28,18 @@ export default function Profile() {
           <h2 className="text-3xl text-center m-2">Your Jams</h2>
           {hostedJams.length > 0 ? (
             hostedJams.map((jam) => (
-              <div
-                key={jam._id}
-                className="entry p-4 my-2 bg-slate-200 rounded-lg"
-              >
-                <h3 className="text-2xl">{jam.title}</h3>
-                <p className="date">
-                  Date: {new Date(jam.date).toLocaleString()}
-                </p>
-                <p className="text">Details: {jam.text}</p>
-                <p className="location">
-                  Location: {jam.location.name}, {jam.location.city}
-                </p>
-              </div>
+              <Link key={jam._id} to={`/jam/${jam._id}`} className="entry-link">
+                <div className="entry p-4 my-2 bg-slate-200 rounded-lg">
+                  <h3 className="text-2xl">{jam.title}</h3>
+                  <p className="date">
+                    Date: {new Date(jam.date).toLocaleString()}
+                  </p>
+                  <p className="text">Details: {jam.text}</p>
+                  <p className="location">
+                    Location: {jam.location.name}, {jam.location.city}
+                  </p>
+                </div>
+              </Link>
             ))
           ) : (
             <p className="text-center text-xl">
