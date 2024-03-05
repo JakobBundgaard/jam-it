@@ -53,19 +53,21 @@ export default function Profile() {
           <h2 className="text-3xl text-center m-2">Jams You Are Attending</h2>
           {attendingJams.length > 0 ? (
             attendingJams.map((jam) => (
-              <div
-                key={jam._id}
-                className="entry p-4 my-2 bg-slate-200 rounded-lg"
-              >
-                <h3 className="text-2xl">{jam.title}</h3>
-                <p className="date">
-                  Date: {new Date(jam.date).toLocaleString()}
-                </p>
-                <p className="text">Details: {jam.text}</p>
-                <p className="location">
-                  Location: {jam.location.name}, {jam.location.city}
-                </p>
-              </div>
+              <Link key={jam._id} to={`/jam/${jam._id}`} className="entry-link">
+                <div
+                  key={jam._id}
+                  className="entry p-4 my-2 bg-slate-200 rounded-lg"
+                >
+                  <h3 className="text-2xl">{jam.title}</h3>
+                  <p className="date">
+                    Date: {new Date(jam.date).toLocaleString()}
+                  </p>
+                  <p className="text">Details: {jam.text}</p>
+                  <p className="location">
+                    Location: {jam.location.name}, {jam.location.city}
+                  </p>
+                </div>
+              </Link>
             ))
           ) : (
             <p className="text-center text-xl">

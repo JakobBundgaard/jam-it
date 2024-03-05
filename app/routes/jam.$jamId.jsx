@@ -39,7 +39,8 @@ export default function Jam() {
         <p className="date">Date: {new Date(jam.date).toLocaleString()}</p>
         <p className="text">Details: {jam.text}</p>
         <p className="location">
-          Location: {jam.location.name}, {jam.location.city}
+          Location: {jam.location.name}, {jam.location.street} in{" "}
+          {jam.location.city}
         </p>
         <div>
           Attendees:
