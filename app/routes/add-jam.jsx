@@ -151,7 +151,7 @@ export async function action({ request }) {
 
   await mongoose.models.Entry.create(jam);
 
-  return redirect("/");
+  return redirect("/profile");
 }
 
 // export async function action({ request }) {

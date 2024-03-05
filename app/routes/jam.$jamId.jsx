@@ -44,7 +44,7 @@ export default function Jam() {
           </ul>
         </div>
       </div>
-      <div className="btns">
+      <div className="btns flex items-center justify-center space-x-4">
         <Form action="update">
           <button className="w-40 bg-slate-500 hover:bg-slate-600 text-white font-bold m-2 py-2 px-4 rounded-md">
             Update
