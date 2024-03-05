@@ -74,7 +74,10 @@ export default function Profile() {
           )}
         </div>
 
-        <Form method="post">
+        <Form
+          method="post"
+          className="flex items-center justify-center space-x-4"
+        >
           <button className="w-40 bg-slate-500 hover:bg-slate-600 text-white font-bold m-2 py-2 px-4 rounded-md">
             Logout
           </button>
