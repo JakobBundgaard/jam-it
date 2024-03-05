@@ -5,17 +5,16 @@ import { json } from "@remix-run/node";
 import mongoose from "mongoose";
 
 export async function loader({ request }) {
-  // If the user is already authenticated redirect to /posts directly
   await authenticator.isAuthenticated(request, {
     successRedirect: "/",
   });
-  // Retrieve error message from session if present
+
   const session = await sessionStorage.getSession(
     request.headers.get("Cookie"),
   );
-  // Get the error message from the session
+
   const error = session.get("sessionErrorKey");
-  return json({ error }); // return the error message
+  return json({ error });
 }
 
 export default function SignUp() {
@@ -80,7 +79,7 @@ export async function action({ request }) {
   const formData = await request.formData();
   const newUser = Object.fromEntries(formData);
 
-  const result = await mongoose.models.User.create(newUser); // create the user
+  const result = await mongoose.models.User.create(newUser);
 
   if (result) {
     return await authenticator.isAuthenticated(request, {

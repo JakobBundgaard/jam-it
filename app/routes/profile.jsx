@@ -1,28 +1,14 @@
 import { Form, useLoaderData } from "@remix-run/react";
 import { authenticator } from "../services/auth.server";
 import mongoose from "mongoose";
-// import { format } from "date-fns";
-// import Nav from "../components/Nav";
-
-// export async function loader({ request }) {
-//   return await authenticator.isAuthenticated(request, {
-//     failureRedirect: "/signin",
-//   });
-// }
 
 export async function loader({ request }) {
   const user = await authenticator.isAuthenticated(request, {
     failureRedirect: "/signin",
   });
 
-  // Fetch user's entries
-  //   const entries = await mongoose
-  //     .model("Entry")
-  //     .find({ userID: user._id })
-  //     .exec(); // Replace with your actual Mongoose query
-
   const entries = await mongoose.models.Entry.find({ userID: user._id }).exec();
-  // Return both the user and their entries
+
   return { user, entries };
 }
 
