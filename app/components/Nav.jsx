@@ -14,7 +14,7 @@ export default function Nav() {
         Jams
       </NavLink>
       <NavLink
-        to="/add-post"
+        to="/add-jam"
         className={({ isActive }) =>
           isActive
             ? "text-slate-900 font-bold"
