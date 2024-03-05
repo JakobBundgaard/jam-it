@@ -90,5 +90,9 @@ export default function Profile() {
 }
 
 export async function action({ request }) {
+  await authenticator.isAuthenticated(request, {
+    failureRedirect: "/signin",
+  });
+
   await authenticator.logout(request, { redirectTo: "/signin" });
 }

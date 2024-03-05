@@ -48,11 +48,6 @@ export default function Index() {
             <p className="p-1">{new Date(entry.date).toLocaleString()}</p>
 
             <p className=" text-gray-500 p-1">{entry.text}</p>
-
-            {/* <p className=" text-gray-700 p-1">{entry.location.street}</p>
-          <p className=" text-gray-700 p-1">
-            {entry.location.zip} - {entry.location.city}
-          </p> */}
           </div>
         </Link>
       ))}

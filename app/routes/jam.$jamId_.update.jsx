@@ -1,17 +1,8 @@
 import { json, redirect } from "@remix-run/node";
 import { useFetcher, useLoaderData, useNavigate } from "@remix-run/react";
 import { useRef } from "react";
-// import { format } from "date-fns";
 import mongoose from "mongoose";
 import { authenticator } from "../services/auth.server";
-
-// export function meta() {
-//   return [
-//     {
-//       title: "Remix Post App - Update"
-//     }
-//   ];
-// }
 
 export async function loader({ params, request }) {
   await authenticator.isAuthenticated(request, {
@@ -59,7 +50,7 @@ export default function UpdateJam() {
                   name="date"
                   required
                   className="text-gray-900 p-1"
-                  defaultValue={localDateTimeString} // Set the adjusted local date time as defaultValue
+                  defaultValue={localDateTimeString}
                 />
               </div>
 
@@ -149,6 +140,9 @@ export default function UpdateJam() {
 }
 
 export async function action({ request, params }) {
+  const user = await authenticator.isAuthenticated(request, {
+    failureRedirect: "/signin",
+  });
   const formData = await request.formData();
   const date = formData.get("date");
   const title = formData.get("title");
@@ -160,10 +154,6 @@ export async function action({ request, params }) {
     zip: parseInt(formData.get("location[zip]"), 10),
     city: formData.get("location[city]"),
   };
-
-  const user = await authenticator.isAuthenticated(request, {
-    failureRedirect: "/signin",
-  });
 
   await mongoose.models.Entry.updateOne(
     { _id: params.jamId },

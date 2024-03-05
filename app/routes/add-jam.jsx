@@ -123,6 +123,9 @@ export default function AddJam() {
 }
 
 export async function action({ request }) {
+  const user = await authenticator.isAuthenticated(request, {
+    failureRedirect: "/signin",
+  });
   const formData = await request.formData();
   const date = formData.get("date");
   const title = formData.get("title");
@@ -135,10 +138,6 @@ export async function action({ request }) {
     zip: parseInt(formData.get("location[zip]"), 10), // Ensure zip is a number
     city: formData.get("location[city]"),
   };
-
-  const user = await authenticator.isAuthenticated(request, {
-    failureRedirect: "/signin",
-  });
 
   // Construct the jam object with the location object included
   const jam = {
