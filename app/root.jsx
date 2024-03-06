@@ -38,7 +38,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="font-poppins">
         {user ? <Nav /> : null}
         <Outlet />
         <ScrollRestoration />

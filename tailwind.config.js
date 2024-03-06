@@ -2,7 +2,11 @@
 export default {
   content: ["./app/**/*.{ts,tsx,jsx,js}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        poppins: ["Poppins", "sans-serif"], // Add this line
+      },
+    },
   },
   plugins: [],
   darkMode: "media",
