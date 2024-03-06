@@ -1,7 +1,7 @@
 import { json } from "@remix-run/node";
 import { useLoaderData, useFetcher, Link } from "@remix-run/react";
 import mongoose from "mongoose";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { authenticator } from "../services/auth.server";
 import { useSearchParams } from "@remix-run/react";
 
@@ -38,6 +38,10 @@ export default function Index() {
   const textareaRef = useRef(null);
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const [eventName, setEventName] = useState("");
+  const [location, setLocation] = useState("");
+  const [date, setDate] = useState("");
+
   const isIdle = fetcher.state === "idle";
   const isInit = isIdle && fetcher.data == null;
 
@@ -56,6 +60,13 @@ export default function Index() {
 
     // Redirect to the current page with the search parameters
     setSearchParams(searchParams, { replace: true });
+  }
+
+  function handleReset() {
+    setEventName("");
+    setLocation("");
+    setDate("");
+    setSearchParams({});
   }
 
   useEffect(() => {
@@ -78,27 +89,37 @@ export default function Index() {
           name="eventName"
           placeholder="Search by event name"
           className="m-2 p-1 rounded"
-          defaultValue={searchParams.get("eventName") || ""}
+          value={eventName}
+          onChange={(e) => setEventName(e.target.value)}
         />
         <input
           type="text"
           name="location"
           placeholder="Search by location"
           className="m-2 p-1 rounded"
-          defaultValue={searchParams.get("location") || ""}
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
         />
         <input
           type="date"
           name="date"
           placeholder="Search by date"
           className="m-2 p-1 rounded"
-          defaultValue={searchParams.get("date") || ""}
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
         />
         <button
           type="submit"
           className="w-40 bg-slate-600 hover:bg-slate-700 text-white font-bold m-2 py-2 px-4 rounded-md"
         >
           Search
+        </button>
+        <button
+          type="button"
+          onClick={handleReset}
+          className="w-40 bg-slate-600 hover:bg-slate-700 text-white font-bold m-2 py-2 px-4 rounded-md"
+        >
+          Reset
         </button>
       </form>
 
