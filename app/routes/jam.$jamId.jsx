@@ -11,8 +11,14 @@ export async function loader({ params, request }) {
   const jam = await mongoose.models.Entry.findOne({
     _id: params.jamId,
   })
-    .populate("attendees", "username") // This populates the `attendees` field, retrieving the `username` of each attendee
+    .populate("userID")
+    .populate("attendees", "username")
     .exec();
+
+  if (!jam) {
+    throw new Error("Jam not found");
+  }
+
   return json({ jam });
 }
 
@@ -33,17 +39,25 @@ export default function Jam() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto my-10 p-6 bg-slate-300 rounded-lg shadow-md">
+    <div className="max-w-2xl mx-auto text-center my-10 p-6 bg-slate-300 rounded-lg shadow-md">
       <div key={jam._id} className="entry p-4 my-2 bg-slate-200 rounded-lg">
         <h3 className="text-2xl">{jam.title}</h3>
-        <p className="date">Date: {new Date(jam.date).toLocaleString()}</p>
-        <p className="text">Details: {jam.text}</p>
+        <p className="date">
+          <b>Date:</b> {new Date(jam.date).toLocaleString()}
+        </p>
+
         <p className="location">
-          Location: {jam.location.name}, {jam.location.street} in{" "}
+          <b>Location:</b> {jam.location.name}, {jam.location.street} in{" "}
           {jam.location.city}
         </p>
+        <p className="text">
+          <b>Details:</b> {jam.text}
+        </p>
+        <p>
+          <b>Host:</b> {jam.userID.username}
+        </p>
         <div>
-          Attendees:
+          <b>Attendees:</b>
           <ul>
             {jam.attendees.map((attendee) => (
               <li key={attendee._id}>{attendee.username}</li> // Displaying attendee usernames

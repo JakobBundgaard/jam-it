@@ -38,9 +38,11 @@ export default function Index() {
   const textareaRef = useRef(null);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [eventName, setEventName] = useState("");
-  const [location, setLocation] = useState("");
-  const [date, setDate] = useState("");
+  const [eventName, setEventName] = useState(
+    searchParams.get("eventName") || "",
+  );
+  const [location, setLocation] = useState(searchParams.get("location") || "");
+  const [date, setDate] = useState(searchParams.get("date") || "");
 
   const isIdle = fetcher.state === "idle";
   const isInit = isIdle && fetcher.data == null;
