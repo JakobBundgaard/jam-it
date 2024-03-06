@@ -2,13 +2,13 @@ import { NavLink } from "@remix-run/react";
 
 export default function Nav() {
   return (
-    <nav className="w-full mx-auto my-10 p-6 bg-slate-300 rounded-lg shadow-md flex justify-around items-center">
+    <nav className="w-full mx-auto my-10 p-6 bg-slate-500 rounded-lg shadow-md flex justify-around items-center">
       <NavLink
         to="/"
         className={({ isActive }) =>
           isActive
             ? "text-slate-900 font-bold"
-            : "text-slate-600 hover:text-slate-900"
+            : "text-slate-800 hover:text-slate-900"
         }
       >
         Jams
@@ -18,7 +18,7 @@ export default function Nav() {
         className={({ isActive }) =>
           isActive
             ? "text-slate-900 font-bold"
-            : "text-slate-600 hover:text-slate-900"
+            : "text-slate-800 hover:text-slate-900"
         }
       >
         Add Jam
@@ -29,7 +29,7 @@ export default function Nav() {
         className={({ isActive }) =>
           isActive
             ? "text-slate-900 font-bold"
-            : "text-slate-600 hover:text-slate-900"
+            : "text-slate-800 hover:text-slate-900"
         }
       >
         Profile

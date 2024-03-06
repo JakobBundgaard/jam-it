@@ -81,7 +81,7 @@ export default function Index() {
   return (
     <div className="max-w-2xl mx-auto my-10 p-6 text-center bg-slate-500 rounded-lg shadow-md">
       <h1 className="text-5xl text-center p-3">Welcome To Jam-It</h1>
-      <h2 className="text-3xl italic text-center">
+      <h2 className="text-3xl italic text-center pb-1">
         Your Portal For Jam Events
       </h2>
 

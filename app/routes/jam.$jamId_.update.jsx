@@ -34,7 +34,7 @@ export default function UpdateJam() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto my-10 p-6 bg-slate-300 rounded-lg shadow-md">
+    <div className="max-w-2xl mx-auto my-10 p-6 bg-slate-500 rounded-lg shadow-md">
       <h1 className="text-5xl text-center">Update Jam Event</h1>
 
       <div className="my-8 border p-3">
@@ -120,13 +120,13 @@ export default function UpdateJam() {
             <div className="btns flex items-center justify-center space-x-4">
               <button
                 type="submit"
-                className="w-40 bg-slate-500 hover:bg-slate-600 text-white font-bold mt-2 py-2 px-4 rounded-md"
+                className="w-40 bg-slate-600 hover:bg-slate-700 text-white font-bold mt-2 py-2 px-4 rounded-md"
               >
                 {fetcher.state === "submitting" ? "Saving..." : "Save"}
               </button>
               <button
                 type="button"
-                className="w-40 bg-slate-500 hover:bg-slate-600 text-white font-bold mt-2 py-2 px-4 rounded-md"
+                className="w-40 bg-slate-600 hover:bg-slate-700 text-white font-bold mt-2 py-2 px-4 rounded-md"
                 onClick={handleCancel}
               >
                 Cancel
