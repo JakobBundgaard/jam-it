@@ -5,7 +5,7 @@ import { json } from "@remix-run/node";
 
 export async function loader({ request }) {
   await authenticator.isAuthenticated(request, {
-    successRedirect: "/",
+    successRedirect: "/profile",
   });
 
   const session = await sessionStorage.getSession(

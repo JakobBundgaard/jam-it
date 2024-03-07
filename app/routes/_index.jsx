@@ -2,13 +2,13 @@ import { json } from "@remix-run/node";
 import { useLoaderData, useFetcher, Link } from "@remix-run/react";
 import mongoose from "mongoose";
 import { useEffect, useRef, useState } from "react";
-import { authenticator } from "../services/auth.server";
+// import { authenticator } from "../services/auth.server";
 import { useSearchParams } from "@remix-run/react";
 
 export async function loader({ request }) {
-  await authenticator.isAuthenticated(request, {
-    failureRedirect: "/signin",
-  });
+  // await authenticator.isAuthenticated(request, {
+  //   failureRedirect: "/signin",
+  // });
 
   const url = new URL(request.url);
   const eventName = url.searchParams.get("eventName");

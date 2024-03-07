@@ -24,7 +24,8 @@ export function meta() {
 }
 
 export async function loader({ request }) {
-  return await authenticator.isAuthenticated(request);
+  const user = await authenticator.isAuthenticated(request);
+  return user;
 }
 
 export default function App() {
@@ -39,7 +40,7 @@ export default function App() {
         <Links />
       </head>
       <body className="font-poppins">
-        {user ? <Nav /> : null}
+        <Nav isAuthenticated={user} />
         <Outlet />
         <ScrollRestoration />
         <Scripts />

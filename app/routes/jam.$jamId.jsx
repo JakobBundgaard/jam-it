@@ -1,12 +1,12 @@
 import { json } from "@remix-run/node";
 import { Link, Form, useLoaderData, useNavigate } from "@remix-run/react";
 import mongoose from "mongoose";
-import { authenticator } from "../services/auth.server";
+// import { authenticator } from "../services/auth.server";
 
-export async function loader({ params, request }) {
-  await authenticator.isAuthenticated(request, {
-    failureRedirect: "/signin",
-  });
+export async function loader({ params }) {
+  // await authenticator.isAuthenticated(request, {
+  //   failureRedirect: "/signin",
+  // });
 
   const jam = await mongoose.models.Entry.findOne({
     _id: params.jamId,
