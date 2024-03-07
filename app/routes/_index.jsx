@@ -6,10 +6,7 @@ import { authenticator } from "../services/auth.server";
 import { useSearchParams } from "@remix-run/react";
 
 export async function loader({ request }) {
-  await authenticator.isAuthenticated(request, {
-    failureRedirect: "/signin",
-  });
-
+  const user = await authenticator.isAuthenticated(request);
   const url = new URL(request.url);
   const eventName = url.searchParams.get("eventName");
   const locationName = url.searchParams.get("location");
@@ -26,6 +23,15 @@ export async function loader({ request }) {
     query.date = {
       $gte: startDate,
     };
+  }
+
+  if (user) {
+    query.userID = { $ne: user._id }; // Make sure userID is the correct field name
+  }
+
+  // Exclude jams the user is attending
+  if (user) {
+    query.attendees = { $nin: [user._id] };
   }
 
   const entries = await mongoose.models.Entry.find(query).exec();

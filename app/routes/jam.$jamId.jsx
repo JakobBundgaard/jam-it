@@ -1,12 +1,21 @@
-import { json } from "@remix-run/node";
-import { Link, Form, useLoaderData, useNavigate } from "@remix-run/react";
+import { json, redirect } from "@remix-run/node";
+import {
+  Link,
+  Form,
+  useLoaderData,
+  useNavigate,
+  useFetcher,
+} from "@remix-run/react";
 import mongoose from "mongoose";
 import { authenticator } from "../services/auth.server";
 
 export async function loader({ params, request }) {
-  await authenticator.isAuthenticated(request, {
-    failureRedirect: "/signin",
-  });
+  let user;
+  try {
+    user = await authenticator.isAuthenticated(request);
+  } catch (error) {
+    user = null;
+  }
 
   const jam = await mongoose.models.Entry.findOne({
     _id: params.jamId,
@@ -19,11 +28,12 @@ export async function loader({ params, request }) {
     throw new Error("Jam not found");
   }
 
-  return json({ jam });
+  return json({ jam, user });
 }
 
 export default function Jam() {
-  const { jam } = useLoaderData();
+  const { jam, user } = useLoaderData();
+  const fetcher = useFetcher();
 
   function confirmDelete(event) {
     const response = confirm("Please confirm you want to delete this event.");
@@ -37,6 +47,40 @@ export default function Jam() {
   function handleCancel() {
     navigate(-1);
   }
+
+  async function handleAttend(event) {
+    event.preventDefault();
+
+    // Prepare the data to be sent
+    const formData = new FormData();
+    formData.append("_action", "attend");
+
+    // Use fetcher to submit the form data
+    fetcher.submit(formData, {
+      method: "post",
+      action: `/jam/${jam._id}`, // Your route that handles the post request
+    });
+  }
+
+  async function handleUnattend(event) {
+    event.preventDefault();
+
+    // Prepare the data to be sent
+    const formData = new FormData();
+    formData.append("_action", "unattend");
+
+    // Use fetcher to submit the form data
+    fetcher.submit(formData, {
+      method: "post",
+      action: `/jam/${jam._id}`, // Your route that handles the post request
+    });
+  }
+
+  const isUserHost =
+    user && jam.userID && jam.userID._id.toString() === user._id.toString();
+
+  const isAlreadyAttending =
+    user && jam.attendees.some((attendee) => attendee._id === user._id);
 
   return (
     <div className="max-w-2xl mx-auto text-center my-10 p-6 bg-slate-500 rounded-lg shadow-md">
@@ -66,31 +110,110 @@ export default function Jam() {
         </div>
       </div>
       <div className="btns flex items-center justify-center space-x-4">
-        <Form
-          className="flex items-center justify-center space-x-4"
-          action="destroy"
-          method="post"
-          onSubmit={confirmDelete}
+        {isUserHost && (
+          <>
+            <Link
+              to="update"
+              className="w-30 bg-slate-600 hover:bg-slate-700 text-white font-bold mt-2 py-2 px-4 rounded-md"
+            >
+              Update
+            </Link>
+            <Form action="destroy" method="post" onSubmit={confirmDelete}>
+              <button
+                type="submit"
+                className="w-30 bg-slate-600 hover:bg-slate-700 text-white font-bold mt-2 py-2 px-4 rounded-md"
+              >
+                Delete
+              </button>
+            </Form>
+          </>
+        )}
+        <button
+          onClick={handleCancel}
+          className="w-30 bg-slate-600 hover:bg-slate-700 text-white font-bold mt-2 py-2 px-4 rounded-md"
         >
-          <Link
-            to="update"
-            className="w-30 bg-slate-600 hover:bg-slate-700 text-white font-bold mt-2 py-2 px-4 rounded-md"
-          >
-            Update
-          </Link>
-
-          <button
-            type="button"
-            className="w-30 bg-slate-600 hover:bg-slate-700 text-white font-bold mt-2 py-2 px-4 rounded-md"
-            onClick={handleCancel}
-          >
-            Cancel
-          </button>
-          <button className="w-30 bg-slate-600 hover:bg-slate-700 text-white font-bold mt-2 py-2 px-4 rounded-md">
-            Delete
-          </button>
-        </Form>
+          Cancel
+        </button>
+        {!isUserHost && !isAlreadyAttending && (
+          <form method="post" onSubmit={handleAttend}>
+            <input type="hidden" name="_action" value="attend" />
+            <button
+              type="submit"
+              className="w-30 bg-slate-600 hover:bg-slate-700 text-white font-bold mt-2 py-2 px-4 rounded-md"
+            >
+              Attend Jam
+            </button>
+          </form>
+        )}
+        {!isUserHost && isAlreadyAttending && (
+          <form method="post" onSubmit={handleUnattend}>
+            <input type="hidden" name="_action" value="unattend" />
+            <button
+              type="submit"
+              className="w-30 bg-red-600 hover:bg-red-700 text-white font-bold mt-2 py-2 px-4 rounded-md"
+            >
+              Unattend Jam
+            </button>
+          </form>
+        )}
       </div>
     </div>
   );
 }
+
+export const action = async ({ request, params }) => {
+  const formData = await request.formData();
+  const actionType = formData.get("_action");
+
+  if (actionType === "attend") {
+    const user = await authenticator.isAuthenticated(request);
+    if (!user) {
+      // Handle the case where the user is not authenticated
+      return redirect("/signin");
+    }
+
+    const jamId = params.jamId;
+    const jam = await mongoose.models.Entry.findById(jamId);
+
+    if (!jam) {
+      // Handle the case where the jam is not found
+      return null;
+    }
+
+    // Check if the user is already an attendee
+    if (jam.attendees.includes(user._id)) {
+      // Maybe you want to send a message back to the user that they're already attending
+      return null;
+    }
+
+    // Add user to attendees
+    jam.attendees.push(user._id);
+    await jam.save();
+
+    return redirect(`/profile`);
+  }
+
+  if (actionType === "unattend") {
+    const user = await authenticator.isAuthenticated(request);
+    if (!user) {
+      // Handle the case where the user is not authenticated
+      return redirect("/signin");
+    }
+
+    const jamId = params.jamId;
+    const jam = await mongoose.models.Entry.findById(jamId);
+
+    if (!jam) {
+      // Handle the case where the jam is not found
+      return null;
+    }
+
+    // Remove the user from attendees
+    jam.attendees = jam.attendees.filter(
+      (attendeeId) => attendeeId.toString() !== user._id.toString(),
+    );
+    await jam.save();
+
+    return redirect(`/profile`);
+  }
+};

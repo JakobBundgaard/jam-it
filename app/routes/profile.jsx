@@ -1,4 +1,4 @@
-import { Link, Form, useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import { authenticator } from "../services/auth.server";
 import mongoose from "mongoose";
 
@@ -74,14 +74,14 @@ export default function Profile() {
           )}
         </div>
 
-        <Form
+        {/* <Form
           method="post"
           className="flex items-center justify-center space-x-4"
         >
           <button className="w-40 bg-slate-600 hover:bg-slate-700 text-white font-bold m-2 py-2 px-4 rounded-md">
             Logout
           </button>
-        </Form>
+        </Form> */}
       </div>
     </div>
   );
