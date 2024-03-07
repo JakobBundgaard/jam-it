@@ -134,7 +134,7 @@ export default function Jam() {
         >
           Cancel
         </button>
-        {!isUserHost && !isAlreadyAttending && (
+        {user && !isUserHost && !isAlreadyAttending && (
           <form method="post" onSubmit={handleAttend}>
             <input type="hidden" name="_action" value="attend" />
             <button

@@ -35,7 +35,7 @@ export default function SignUp() {
           className="flex flex-col items-center"
         >
           <div className="mb-4 w-96">
-            <label htmlFor="name" className="block text-left mb-1">
+            <label htmlFor="username" className="block text-left mb-1">
               Username
             </label>
 
