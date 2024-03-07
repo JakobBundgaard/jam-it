@@ -6,10 +6,6 @@ import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "@remix-run/react";
 
 export async function loader({ request }) {
-  // await authenticator.isAuthenticated(request, {
-  //   failureRedirect: "/signin",
-  // });
-
   const url = new URL(request.url);
   const eventName = url.searchParams.get("eventName");
   const locationName = url.searchParams.get("location");

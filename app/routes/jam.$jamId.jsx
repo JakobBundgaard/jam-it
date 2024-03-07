@@ -4,9 +4,12 @@ import mongoose from "mongoose";
 import { authenticator } from "../services/auth.server";
 
 export async function loader({ params, request }) {
-  const user = await authenticator.isAuthenticated(request, {
-    failureRedirect: "/signin",
-  });
+  let user;
+  try {
+    user = await authenticator.isAuthenticated(request);
+  } catch (error) {
+    user = null;
+  }
 
   const jam = await mongoose.models.Entry.findOne({
     _id: params.jamId,
@@ -38,7 +41,8 @@ export default function Jam() {
     navigate(-1);
   }
 
-  const isUserHost = jam.userID && user && jam.userID._id === user._id;
+  const isUserHost =
+    user && jam.userID && jam.userID._id.toString() === user._id.toString();
 
   return (
     <div className="max-w-2xl mx-auto text-center my-10 p-6 bg-slate-500 rounded-lg shadow-md">
