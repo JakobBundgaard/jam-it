@@ -1,12 +1,12 @@
 import { json } from "@remix-run/node";
 import { Link, Form, useLoaderData, useNavigate } from "@remix-run/react";
 import mongoose from "mongoose";
-// import { authenticator } from "../services/auth.server";
+import { authenticator } from "../services/auth.server";
 
-export async function loader({ params }) {
-  // await authenticator.isAuthenticated(request, {
-  //   failureRedirect: "/signin",
-  // });
+export async function loader({ params, request }) {
+  const user = await authenticator.isAuthenticated(request, {
+    failureRedirect: "/signin",
+  });
 
   const jam = await mongoose.models.Entry.findOne({
     _id: params.jamId,
@@ -19,11 +19,11 @@ export async function loader({ params }) {
     throw new Error("Jam not found");
   }
 
-  return json({ jam });
+  return json({ jam, user });
 }
 
 export default function Jam() {
-  const { jam } = useLoaderData();
+  const { jam, user } = useLoaderData();
 
   function confirmDelete(event) {
     const response = confirm("Please confirm you want to delete this event.");
@@ -37,6 +37,8 @@ export default function Jam() {
   function handleCancel() {
     navigate(-1);
   }
+
+  const isUserHost = jam.userID && user && jam.userID._id === user._id;
 
   return (
     <div className="max-w-2xl mx-auto text-center my-10 p-6 bg-slate-500 rounded-lg shadow-md">
@@ -66,30 +68,30 @@ export default function Jam() {
         </div>
       </div>
       <div className="btns flex items-center justify-center space-x-4">
-        <Form
-          className="flex items-center justify-center space-x-4"
-          action="destroy"
-          method="post"
-          onSubmit={confirmDelete}
+        {isUserHost && (
+          <>
+            <Link
+              to="update"
+              className="w-30 bg-slate-600 hover:bg-slate-700 text-white font-bold mt-2 py-2 px-4 rounded-md"
+            >
+              Update
+            </Link>
+            <Form action="destroy" method="post" onSubmit={confirmDelete}>
+              <button
+                type="submit"
+                className="w-30 bg-slate-600 hover:bg-slate-700 text-white font-bold mt-2 py-2 px-4 rounded-md"
+              >
+                Delete
+              </button>
+            </Form>
+          </>
+        )}
+        <button
+          onClick={handleCancel}
+          className="w-30 bg-slate-600 hover:bg-slate-700 text-white font-bold mt-2 py-2 px-4 rounded-md"
         >
-          <Link
-            to="update"
-            className="w-30 bg-slate-600 hover:bg-slate-700 text-white font-bold mt-2 py-2 px-4 rounded-md"
-          >
-            Update
-          </Link>
-
-          <button
-            type="button"
-            className="w-30 bg-slate-600 hover:bg-slate-700 text-white font-bold mt-2 py-2 px-4 rounded-md"
-            onClick={handleCancel}
-          >
-            Cancel
-          </button>
-          <button className="w-30 bg-slate-600 hover:bg-slate-700 text-white font-bold mt-2 py-2 px-4 rounded-md">
-            Delete
-          </button>
-        </Form>
+          Cancel
+        </button>
       </div>
     </div>
   );
