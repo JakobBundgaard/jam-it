@@ -152,18 +152,3 @@ export async function action({ request }) {
 
   return redirect("/profile");
 }
-
-// export async function action({ request }) {
-//   const formData = await request.formData();
-//   const jam = Object.fromEntries(formData);
-
-//   const user = await authenticator.isAuthenticated(request, {
-//     failureRedirect: "/signin",
-//   });
-
-//   jam.user = user._id;
-
-//   await mongoose.models.Entry.create(jam);
-
-//   return redirect("/");
-// }
