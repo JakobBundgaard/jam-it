@@ -8,7 +8,7 @@ export default function Nav({ isAuthenticated }) {
   };
 
   return (
-    <nav className="w-full mx-auto my-10 p-6 bg-gradient-to-r from-gray-700 to-black shadow-md flex justify-around items-center">
+    <nav className="sticky top-0 z-50 w-full mx-auto p-6 bg-gradient-to-r from-gray-700 to-black shadow-md flex justify-around items-center">
       <NavLink
         to="/"
         className={({ isActive }) =>
