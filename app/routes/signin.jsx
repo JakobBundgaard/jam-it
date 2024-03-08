@@ -13,7 +13,14 @@ export async function loader({ request }) {
   );
 
   const error = session.get("sessionErrorKey");
-  return json({ error });
+
+  session.unset("sessionErrorKey");
+
+  const headers = new Headers({
+    "Set-Cookie": await sessionStorage.commitSession(session),
+  });
+
+  return json({ error }, { headers });
 }
 
 export default function SignIn() {
@@ -75,10 +82,6 @@ export default function SignIn() {
 }
 
 export async function action({ request }) {
-  await authenticator.isAuthenticated(request, {
-    successRedirect: "/",
-  });
-
   return await authenticator.authenticate("user-pass", request, {
     successRedirect: "/profile",
     failureRedirect: "/signin",

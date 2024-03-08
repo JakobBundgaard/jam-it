@@ -16,7 +16,13 @@ export async function loader({ request }) {
   const session = await getSession(request.headers.get("Cookie"));
 
   const error = session.get("sessionErrorKey");
-  return json({ error });
+  session.unset("sessionErrorKey");
+
+  const headers = new Headers({
+    "Set-Cookie": await commitSession(session),
+  });
+
+  return json({ error }, { headers });
 }
 
 export default function SignUp() {
