@@ -80,6 +80,11 @@ const entrySchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+    maxAttendees: {
+      type: Number,
+      required: true,
+      min: 1, // Ensure there's at least space for one attendee
+    },
     attendees: [
       {
         type: Schema.Types.ObjectId,
