@@ -25,8 +25,8 @@ const userSchema = new Schema(
       type: String,
       required: true,
       select: false,
-      minlength: [6, "Username must be at least 5 characters long"], // Burde være længere og indeholde special characterer, men gør det ikke for nemheds skyld
-      maxlength: [20, "Username cannot be more than 30 characters long"],
+      minlength: [6, "Password must be at least 5 characters long"], // Burde være længere og indeholde special characterer, men gør det ikke for nemheds skyld
+      maxlength: [20, "Password cannot be more than 30 characters long"],
     },
   },
   { timestamps: true },

@@ -145,11 +145,17 @@ export async function action({ request }) {
       });
     }
   } catch (error) {
-    // Handle any errors such as duplicate username or email, etc.
-    session.flash("sessionErrorKey", {
-      message: "Failed to sign up, please try again.",
-    });
-    // session.unset("sessionErrorKey");
+    let errorMessage = "Failed to sign up, please try again.";
+    // Check if the error is a Mongoose validation error
+    if (error.name === "ValidationError") {
+      const errors = error.errors;
+      // Collect all validation messages into a single string or an array, depending on your preference
+      errorMessage = Object.values(errors)
+        .map((err) => err.message)
+        .join(", ");
+    }
+
+    session.flash("sessionErrorKey", { message: errorMessage });
     return redirect("/signup", {
       headers: {
         "Set-Cookie": await commitSession(session),
@@ -157,3 +163,17 @@ export async function action({ request }) {
     });
   }
 }
+
+// catch (error) {
+//     // Handle any errors such as duplicate username or email, etc.
+//     session.flash("sessionErrorKey", {
+//       message: "Failed to sign up, please try again.",
+//     });
+//     // session.unset("sessionErrorKey");
+//     return redirect("/signup", {
+//       headers: {
+//         "Set-Cookie": await commitSession(session),
+//       },
+//     });
+//   }
+// }

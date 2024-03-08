@@ -74,7 +74,10 @@ export default function SignIn() {
           </div>
         </Form>
         <p>
-          Not a member yet? <Link to="/signup">Signup here...</Link>
+          Not a member yet?{" "}
+          <Link to="/signup" className="underline">
+            Signup here...
+          </Link>
         </p>
       </div>
     </div>
