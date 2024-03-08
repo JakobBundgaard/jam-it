@@ -12,7 +12,13 @@ export async function loader({ request }) {
   const locationName = url.searchParams.get("location");
   const date = url.searchParams.get("date");
 
-  let query = {};
+  const today = new Date();
+  today.setUTCHours(0, 0, 0, 0);
+
+  let query = {
+    date: { $gte: today },
+  };
+
   if (eventName) query.title = new RegExp(eventName, "i");
   if (locationName) query["location.name"] = new RegExp(locationName, "i");
 
@@ -20,9 +26,11 @@ export async function loader({ request }) {
     const startDate = new Date(date);
     startDate.setUTCHours(0, 0, 0, 0);
 
-    query.date = {
-      $gte: startDate,
-    };
+    if (startDate >= today) {
+      query.date = {
+        $gte: startDate,
+      };
+    }
   }
 
   if (user) {
@@ -34,7 +42,9 @@ export async function loader({ request }) {
     query.attendees = { $nin: [user._id] };
   }
 
-  const entries = await mongoose.models.Entry.find(query).exec();
+  const entries = await mongoose.models.Entry.find(query)
+    .sort({ date: 1 })
+    .exec();
   return json({ entries });
 }
 

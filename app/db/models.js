@@ -9,16 +9,24 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
+      minlength: [3, "Username must be at least 5 characters long"],
+      maxlength: [20, "Username cannot be more than 30 characters long"],
     },
     email: {
       type: String,
       required: true,
       unique: true,
+      match: [
+        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+        "Please fill a valid email address",
+      ],
     },
     password: {
       type: String,
       required: true,
       select: false,
+      minlength: [6, "Password must be at least 5 characters long"], // Burde være længere og indeholde special characterer, men gør det ikke for nemheds skyld
+      maxlength: [20, "Password cannot be more than 30 characters long"],
     },
   },
   { timestamps: true },

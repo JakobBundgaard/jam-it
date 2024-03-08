@@ -9,10 +9,14 @@ export async function loader({ request }) {
 
   const hostedJams = await mongoose.models.Entry.find({
     userID: user._id,
-  }).exec();
+  })
+    .sort({ date: 1 })
+    .exec();
   const attendingJams = await mongoose.models.Entry.find({
     attendees: user._id,
-  }).exec();
+  })
+    .sort({ date: 1 })
+    .exec();
 
   return { user, hostedJams, attendingJams };
 }
