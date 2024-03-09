@@ -33,6 +33,7 @@ export async function loader({ params, request }) {
 
 export default function Jam() {
   const { jam, user } = useLoaderData();
+  const placesLeft = jam.maxAttendees - jam.attendees.length;
   const fetcher = useFetcher();
 
   function confirmDelete(event) {
@@ -81,11 +82,22 @@ export default function Jam() {
 
   const isAlreadyAttending =
     user && jam.attendees.some((attendee) => attendee._id === user._id);
+  console.log(jam);
 
   return (
     <div className="max-w-2xl mx-auto text-center my-10 p-6 bg-slate-500 rounded-lg shadow-md">
       <div key={jam._id} className="entry p-4 my-2 bg-slate-200 rounded-lg">
+        {placesLeft <= 0 ? (
+          <div className="full-badge bg-red-500 text-white p-2 rounded">
+            Event Full
+          </div>
+        ) : placesLeft <= 5 ? (
+          <div className="places-left-badge bg-yellow-500 text-white p-2 rounded">
+            Only {placesLeft} place{placesLeft === 1 ? "" : "s"} left!
+          </div>
+        ) : null}
         <h3 className="text-2xl">{jam.title}</h3>
+
         <p className="date">
           <b>Date:</b> {new Date(jam.date).toLocaleString()}
         </p>
@@ -108,6 +120,9 @@ export default function Jam() {
             ))}
           </ul>
         </div>
+        <p>
+          <b>Places Left:</b> {jam.maxAttendees - jam.attendees.length}
+        </p>
       </div>
       <div className="btns flex items-center justify-center space-x-4">
         {isUserHost && (
@@ -189,6 +204,14 @@ export const action = async ({ request, params }) => {
     // Add user to attendees
     jam.attendees.push(user._id);
     await jam.save();
+
+    if (jam.attendees.length >= jam.maxAttendees) {
+      // Optionally, return a message indicating the event is full
+      // You might need to implement a mechanism to display this message to the user
+      return redirect(`/profile`, {
+        state: { message: "This jam is full." },
+      });
+    }
 
     return redirect(`/profile`);
   }

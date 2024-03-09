@@ -59,6 +59,18 @@ export default function AddJam() {
                   className="w-full text-gray-900 p-1 rounded"
                 />
               </div>
+
+              <div className="mt-4">
+                <input
+                  type="number"
+                  name="maxAttendees"
+                  placeholder="Maximum Attendees"
+                  required
+                  className="w-full text-gray-900 p-1 rounded"
+                  min="1" // Ensure at least one attendee can join
+                />
+              </div>
+
               <div className="mt-4">
                 <textarea
                   ref={textareaRef}
@@ -68,6 +80,7 @@ export default function AddJam() {
                   className="w-full text-gray-700 p-1 rounded"
                 />
               </div>
+
               <p className="text-xl">Location</p>
               <div className="mt-4">
                 <input
@@ -130,6 +143,7 @@ export async function action({ request }) {
   const date = formData.get("date");
   const title = formData.get("title");
   const text = formData.get("text");
+  const maxAttendees = parseInt(formData.get("maxAttendees"), 10);
 
   // Manually construct the location object
   const location = {
@@ -143,6 +157,7 @@ export async function action({ request }) {
   const jam = {
     date,
     title,
+    maxAttendees,
     text,
     location,
     userID: user._id, // Ensure this matches your schema field for the user reference
