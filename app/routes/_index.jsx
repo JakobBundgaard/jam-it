@@ -42,9 +42,15 @@ export async function loader({ request }) {
     query.attendees = { $nin: [user._id] };
   }
 
-  const entries = await mongoose.models.Entry.find(query)
+  let entries = await mongoose.models.Entry.find(query)
     .sort({ date: 1 })
+    .populate("attendees")
     .exec();
+
+  entries = entries.filter(
+    (entry) => entry.attendees.length < entry.maxAttendees,
+  );
+
   return json({ entries });
 }
 
@@ -141,22 +147,30 @@ export default function Index() {
         </button>
       </form>
 
-      {entries.map((entry) => (
-        <Link key={entry._id} to={`/jam/${entry._id}`} className="entry-link">
-          <div
-            key={entry._id}
-            className="bg-slate-300 mt-4 rounded-lg shadow-md"
-          >
-            <p className="text-2xl p-1">{entry.title}</p>
-            <p className="text-xl italic text-gray-900 p-1">
-              {entry.location.name}
-            </p>
-            <p className="p-1">{new Date(entry.date).toLocaleString()}</p>
+      {entries.map((entry) => {
+        const placesLeft = entry.maxAttendees - entry.attendees.length;
+        return (
+          <Link key={entry._id} to={`/jam/${entry._id}`} className="entry-link">
+            <div
+              key={entry._id}
+              className="bg-slate-300 mt-4 rounded-lg shadow-md"
+            >
+              {placesLeft <= 5 && placesLeft > 0 ? (
+                <div className="places-left-badge bg-yellow-500 text-white p-2 rounded">
+                  Only {placesLeft} place{placesLeft === 1 ? "" : "s"} left!
+                </div>
+              ) : null}
+              <p className="text-2xl p-1">{entry.title}</p>
 
-            <p className=" text-gray-500 p-1">{entry.text}</p>
-          </div>
-        </Link>
-      ))}
+              <p className="text-xl italic text-gray-900 p-1">
+                {entry.location.name}
+              </p>
+              <p className="p-1">{new Date(entry.date).toLocaleString()}</p>
+              <p className="text-gray-500 p-1">{entry.text}</p>
+            </div>
+          </Link>
+        );
+      })}
     </div>
   );
 }
