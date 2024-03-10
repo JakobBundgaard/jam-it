@@ -84,44 +84,55 @@ export default function Jam() {
     user && jam.attendees.some((attendee) => attendee._id === user._id);
   console.log(jam);
 
+  const badgeClasses =
+    "inline-block w-full md:w-3/4 lg:w-1/2 py-1 text-sm font-semibold rounded-full mb-4 mx-auto text-center";
+
   return (
-    <div className="max-w-2xl mx-auto text-center my-10 p-6 bg-slate-500 rounded-lg shadow-md">
-      <div key={jam._id} className="entry p-4 my-2 bg-slate-200 rounded-lg">
+    <div className="flex flex-col max-w-4xl mx-auto my-10 p-6 text-center bg-slate-500 rounded-lg shadow-md ">
+      <div
+        key={jam._id}
+        className="block bg-gray-50 hover:bg-blue-50 focus:bg-blue-100 transition-colors duration-150 rounded-lg shadow px-6 py-4 mb-4"
+        style={{ minHeight: "160px" }}
+      >
         {placesLeft <= 0 ? (
-          <div className="full-badge bg-red-500 text-white p-2 rounded">
+          <div className={`${badgeClasses} bg-red-500 text-white`}>
             Event Full
           </div>
         ) : placesLeft <= 5 ? (
-          <div className="places-left-badge bg-yellow-500 text-white p-2 rounded">
+          <div className={`${badgeClasses} bg-yellow-300 text-yellow-800`}>
             Only {placesLeft} place{placesLeft === 1 ? "" : "s"} left!
           </div>
         ) : null}
-        <h3 className="text-2xl">{jam.title}</h3>
+        <h3 className="text-2xl font-bold text-gray-800">{jam.title}</h3>
 
-        <p className="date">
-          <b>Date:</b> {new Date(jam.date).toLocaleString()}
+        <p className="text-md text-gray-600">
+          <strong>Date:</strong> {new Date(jam.date).toLocaleString()}
         </p>
 
-        <p className="location">
-          <b>Location:</b> {jam.location.name}, {jam.location.street} in{" "}
-          {jam.location.city}
+        <p className="text-md text-gray-600">
+          <strong>Location:</strong> {jam.location.name}, {jam.location.street}{" "}
+          in {jam.location.city}
         </p>
-        <p className="text">
-          <b>Details:</b> {jam.text}
+        <p className="text-sm text-gray-500">
+          <strong>Details:</strong> {jam.text}
         </p>
-        <p>
-          <b>Host:</b> {jam.userID.username}
+        <p className="text-sm text-gray-500">
+          <strong>Host:</strong> {jam.userID.username}
         </p>
-        <div>
-          <b>Attendees:</b>
-          <ul>
-            {jam.attendees.map((attendee) => (
-              <li key={attendee._id}>{attendee.username}</li> // Displaying attendee usernames
-            ))}
-          </ul>
+        <div className="text-sm text-gray-500">
+          <strong>Attendees:</strong>
+          {jam.attendees.length > 0 ? (
+            <ul className="list-disc list-inside">
+              {jam.attendees.map((attendee) => (
+                <li key={attendee._id}>{attendee.username}</li>
+              ))}
+            </ul>
+          ) : (
+            <p>No attendees yet.</p>
+          )}
         </div>
-        <p>
-          <b>Places Left:</b> {jam.maxAttendees - jam.attendees.length}
+        <p className="text-sm text-gray-500">
+          <strong>Places Left:</strong> {placesLeft}
         </p>
       </div>
       <div className="btns flex items-center justify-center space-x-4">
