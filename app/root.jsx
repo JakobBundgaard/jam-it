@@ -13,6 +13,7 @@ import {
 import styles from "./tailwind.css";
 import { authenticator } from "./services/auth.server";
 import Nav from "./components/Nav";
+import icon from "./images/favicon.png";
 
 export const links = () => [
   {
@@ -38,6 +39,8 @@ export default function App() {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href={icon} type="image/png"></link>
+
         <Meta />
         <Links />
       </head>
