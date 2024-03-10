@@ -28,16 +28,16 @@ export default function SignIn() {
   return (
     <div
       id="sign-in-page"
-      className="max-w-2xl mx-auto my-10 p-6 text-center bg-slate-500 rounded-lg shadow-md"
+      className="flex flex-col max-w-xl mx-auto my-10 p-6 text-center bg-slate-500 rounded-lg shadow-md"
     >
       <div>
-        <h1 className="text-xl italic text-center">Sign In</h1>
+        <h1 className="text-4xl font-bold text-gray-800 mb-4">Sign In</h1>
         <Form
           id="sign-in-form"
           method="post"
-          className="flex flex-col items-center"
+          className="flex flex-col items-center justify-center"
         >
-          <div className="mb-4 w-96">
+          <div className="mb-4 w-full px-6">
             <label htmlFor="email" className="block text-left mb-1">
               Mail
             </label>
@@ -48,10 +48,10 @@ export default function SignIn() {
               aria-label="email"
               placeholder="Type your email..."
               required
-              className="text-gray-900 w-full p-1 rounded-md"
+              className="text-gray-900 w-full p-2 rounded-md"
             />
           </div>
-          <div className="mb-4 w-96">
+          <div className="mb-4 w-full px-6">
             <label htmlFor="password" className="block text-left mb-1">
               Password
             </label>
@@ -63,19 +63,22 @@ export default function SignIn() {
               placeholder="Type your password..."
               autoComplete="current-password"
               required
-              className="text-gray-900 w-full p-1 rounded-md"
+              className="text-gray-900 w-full p-2 rounded-md"
             />
           </div>
-          <button className="w-40 bg-slate-600 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-md">
+          <button className="w-52 bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-md">
             Sign In
           </button>
           <div className="error-message text-red-600 mt-2">
             {loaderData?.error ? <p>{loaderData?.error?.message}</p> : null}
           </div>
         </Form>
-        <p>
+        <p className="mt-6">
           Not a member yet?{" "}
-          <Link to="/signup" className="underline">
+          <Link
+            to="/signup"
+            className="text-blue-800 hover:text-blue-900 underline"
+          >
             Signup here...
           </Link>
         </p>

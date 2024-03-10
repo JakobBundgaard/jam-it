@@ -30,10 +30,12 @@ export default function AddJam() {
   }, [isInit, isIdle]);
 
   return (
-    <div className="max-w-2xl mx-auto my-10 p-6 bg-slate-500 rounded-lg shadow-md">
-      <h1 className="text-5xl text-center">Create Jam Event</h1>
+    <div className="flex flex-col max-w-xl mx-auto my-10 p-6 text-center bg-slate-500 rounded-lg shadow-md">
+      <h1 className="text-4xl font-bold text-gray-800 mb-4">
+        Create Jam Event
+      </h1>
 
-      <div className="my-8 border p-3">
+      <div>
         <fetcher.Form method="post" className="mt-2">
           <fieldset
             className="disabled:opacity-70"
@@ -45,7 +47,7 @@ export default function AddJam() {
                   type="datetime-local"
                   name="date"
                   required
-                  className="text-gray-900 p-1 rounded"
+                  className="text-gray-900 p-2 rounded"
                   defaultValue={format(new Date(), "yyyy-MM-dd'T'HH:mm")}
                 />
               </div>
@@ -56,7 +58,7 @@ export default function AddJam() {
                   name="title"
                   placeholder="Title"
                   required
-                  className="w-full text-gray-900 p-1 rounded"
+                  className="w-full text-gray-900 p-2 rounded"
                 />
               </div>
 
@@ -66,8 +68,8 @@ export default function AddJam() {
                   name="maxAttendees"
                   placeholder="Maximum Attendees"
                   required
-                  className="w-full text-gray-900 p-1 rounded"
-                  min="1" // Ensure at least one attendee can join
+                  className="w-full text-gray-900 p-2 rounded"
+                  min="1"
                 />
               </div>
 
@@ -77,7 +79,7 @@ export default function AddJam() {
                   placeholder="Type your entry..."
                   name="text"
                   required
-                  className="w-full text-gray-700 p-1 rounded"
+                  className="w-full text-gray-700 p-2 rounded"
                 />
               </div>
 
@@ -88,7 +90,7 @@ export default function AddJam() {
                   name="location[name]"
                   placeholder="Location Name"
                   required
-                  className="w-full text-gray-900 p-1 rounded"
+                  className="w-full text-gray-900 p-2 rounded"
                 />
               </div>
               <div className="mt-4">
@@ -97,7 +99,7 @@ export default function AddJam() {
                   name="location[street]"
                   placeholder="Street"
                   required
-                  className="w-full text-gray-900 p-1 rounded"
+                  className="w-full text-gray-900 p-2 rounded"
                 />
               </div>
               <div className="mt-4">
@@ -106,7 +108,7 @@ export default function AddJam() {
                   name="location[zip]"
                   placeholder="ZIP Code"
                   required
-                  className="w-full text-gray-900 p-1 rounded"
+                  className="w-full text-gray-900 p-2 rounded"
                 />
               </div>
               <div className="mt-4">
@@ -115,7 +117,7 @@ export default function AddJam() {
                   name="location[city]"
                   placeholder="City"
                   required
-                  className="w-full text-gray-900 p-1 rounded"
+                  className="w-full text-gray-900 p-2 rounded"
                 />
               </div>
             </div>
@@ -123,7 +125,7 @@ export default function AddJam() {
             <div className="flex items-center justify-center space-x-4">
               <button
                 type="submit"
-                className="w-40 bg-slate-600 hover:bg-slate-700 text-white font-bold m-2 py-2 px-4 rounded-md"
+                className="w-52 bg-blue-700 hover:bg-blue-800 text-white font-bold m-2 py-2 px-4 rounded-md"
               >
                 {fetcher.state === "submitting" ? "Saving..." : "Save"}
               </button>
