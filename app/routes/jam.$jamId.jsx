@@ -140,14 +140,14 @@ export default function Jam() {
           <>
             <Link
               to="update"
-              className="w-30 bg-slate-600 hover:bg-slate-700 text-white font-bold mt-2 py-2 px-4 rounded-md"
+              className="w-40 bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-md"
             >
               Update
             </Link>
             <Form action="destroy" method="post" onSubmit={confirmDelete}>
               <button
                 type="submit"
-                className="w-30 bg-slate-600 hover:bg-slate-700 text-white font-bold mt-2 py-2 px-4 rounded-md"
+                className="w-40 bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-md"
               >
                 Delete
               </button>
@@ -156,7 +156,7 @@ export default function Jam() {
         )}
         <button
           onClick={handleCancel}
-          className="w-30 bg-slate-600 hover:bg-slate-700 text-white font-bold mt-2 py-2 px-4 rounded-md"
+          className="w-40 bg-slate-600 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-md"
         >
           Cancel
         </button>
@@ -165,7 +165,7 @@ export default function Jam() {
             <input type="hidden" name="_action" value="attend" />
             <button
               type="submit"
-              className="w-30 bg-slate-600 hover:bg-slate-700 text-white font-bold mt-2 py-2 px-4 rounded-md"
+              className="w-40 bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-md"
             >
               Attend Jam
             </button>
@@ -176,7 +176,7 @@ export default function Jam() {
             <input type="hidden" name="_action" value="unattend" />
             <button
               type="submit"
-              className="w-30 bg-red-600 hover:bg-red-700 text-white font-bold mt-2 py-2 px-4 rounded-md"
+              className="w-40 bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-md"
             >
               Unattend Jam
             </button>
