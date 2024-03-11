@@ -35,10 +35,8 @@ export default function AddJam() {
       <div>
         <img className="w-full" src={banner} alt="" />
       </div>
-      <div className="flex flex-col max-w-xl mx-auto my-10 p-6 text-center bg-slate-500 rounded-lg shadow-md">
-        <h1 className="text-4xl text-gray-800 mb-4 uppercase">
-          Create Jam Event
-        </h1>
+      <div className="flex flex-col max-w-xl mx-auto my-10 p-6 text-center rounded-lg shadow-md">
+        <h1 className="text-4xl text-white mb-4 uppercase">Create Jam Event</h1>
 
         <div>
           <fetcher.Form method="post" className="mt-2">
@@ -88,7 +86,7 @@ export default function AddJam() {
                   />
                 </div>
 
-                <p className="text-xl">Location</p>
+                <p className="text-xl text-white">Location</p>
                 <div className="mt-4">
                   <input
                     type="text"
@@ -130,7 +128,7 @@ export default function AddJam() {
               <div className="flex items-center justify-center space-x-4">
                 <button
                   type="submit"
-                  className="w-52 bg-blue-700 hover:bg-blue-800 text-white font-bold m-2 py-2 px-4 rounded-md"
+                  className="w-52 bg-[#4972b6]  hover:bg-blue-800 text-white font-bold m-2 py-2 px-4 rounded-md"
                 >
                   {fetcher.state === "submitting" ? "Saving..." : "Save"}
                 </button>

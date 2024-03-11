@@ -30,12 +30,12 @@ export default function Profile() {
       <div>
         <img className="w-full" src={banner} alt="" />
       </div>
-      <div className="flex flex-col max-w-4xl mx-auto my-10 p-6 text-center bg-slate-500 rounded-lg shadow-md">
-        <h1 className="text-5xl text-center text-gray-800 mb-4 uppercase">
+      <div className="flex flex-col max-w-4xl mx-auto my-10 p-6 text-center rounded-lg shadow-md">
+        <h1 className="text-5xl text-center text-white mb-4 uppercase">
           WELCOME {user.username}
         </h1>
         <div className="entries-list">
-          <h2 className="text-3xl font-light text-center text-gray-700 mb-6">
+          <h2 className="text-3xl font-light text-center text-white mb-6">
             Your Jams
           </h2>
           {hostedJams.length > 0 ? (
@@ -77,7 +77,7 @@ export default function Profile() {
               );
             })
           ) : (
-            <p className="text-xl text-gray-700">
+            <p className="text-xl text-white">
               You are not hosting any jams currently.
             </p>
           )}
@@ -85,14 +85,14 @@ export default function Profile() {
 
         {/* Jams the user is attending */}
         <div className="entries-list">
-          <h2 className="text-2xl font-light text-center text-gray-700 mb-6">
+          <h2 className="text-2xl font-light text-center text-white mb-6">
             Jams You Are Attending
           </h2>
           {attendingJams.length > 0 ? (
             attendingJams.map((jam) => {
               const placesLeft = jam.maxAttendees - jam.attendees.length;
               const badgeClasses =
-                "inline-block w-5/6 md:w-1/2 lg:w-1/3 xl:w-1/4 py-1 text-sm font-semibold rounded-full mb-2 mx-auto text-center";
+                "inline-block w-5/6 md:w-1/2 lg:w-1/3 xl:w-1/4 py-1 text-sm p-2 rounded-full mb-2 mx-auto text-center";
               return (
                 <Link
                   key={jam._id}
@@ -105,12 +105,12 @@ export default function Profile() {
                     style={{ minHeight: "160px" }}
                   >
                     {placesLeft <= 0 ? (
-                      <div className={`${badgeClasses} bg-red-500 text-white`}>
+                      <div className={`${badgeClasses} bg-red-700 text-white`}>
                         Event Full
                       </div>
                     ) : placesLeft <= 5 ? (
                       <div
-                        className={`${badgeClasses} bg-yellow-300 text-yellow-800`}
+                        className={`${badgeClasses} bg-[#e89633] text-white`}
                       >
                         Only {placesLeft} place{placesLeft === 1 ? "" : "s"}{" "}
                         left!
@@ -130,7 +130,7 @@ export default function Profile() {
               );
             })
           ) : (
-            <p className="text-xl text-gray-700">
+            <p className="text-xl text-white">
               You are not attending any jams currently.
             </p>
           )}

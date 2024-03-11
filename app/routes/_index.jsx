@@ -107,13 +107,13 @@ export default function Index() {
         <img className="w-full" src={banner} alt="" />
       </div>
       <div
-        className="flex flex-col max-w-4xl mx-auto my-10 p-6 text-center bg-slate-500 rounded-lg shadow-md"
+        className="flex flex-col max-w-4xl mx-auto my-10 p-6 text-center rounded-lg shadow-md"
         style={{ maxWidth: "768px" }}
       >
-        <h1 className="text-5xl  text-center text-gray-800 mb-4">
+        <h1 className="text-5xl  text-center text-white mb-4">
           WELCOME TO JAM-IT
         </h1>
-        <h2 className="text-3xl font-light text-center text-gray-700 mb-6">
+        <h2 className="text-3xl font-light text-center text-white mb-6">
           Your Portal For Jam Events
         </h2>
 
@@ -150,7 +150,7 @@ export default function Index() {
           <div className="flex gap-4">
             <button
               type="submit"
-              className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              className="px-6 py-2 bg-[#4972b6] text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
             >
               Search
             </button>

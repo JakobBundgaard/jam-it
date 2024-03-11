@@ -88,18 +88,18 @@ export default function Jam() {
     "inline-block w-full md:w-3/4 lg:w-1/2 py-1 text-sm font-semibold rounded-full mb-4 mx-auto text-center";
 
   return (
-    <div className="flex flex-col max-w-4xl mx-auto my-10 p-6 text-center bg-slate-500 rounded-lg shadow-md ">
+    <div className="flex flex-col max-w-4xl mx-auto my-10 p-6 text-center rounded-lg shadow-md ">
       <div
         key={jam._id}
         className="block bg-gray-50 hover:bg-blue-50 focus:bg-blue-100 transition-colors duration-150 rounded-lg shadow px-6 py-4 mb-4"
         style={{ minHeight: "160px" }}
       >
         {placesLeft <= 0 ? (
-          <div className={`${badgeClasses} bg-red-500 text-white`}>
+          <div className={`${badgeClasses} bg-red-700 text-white`}>
             Event Full
           </div>
         ) : placesLeft <= 5 ? (
-          <div className={`${badgeClasses} bg-yellow-300 text-yellow-800`}>
+          <div className={`${badgeClasses} bg-[#e89633] text-white`}>
             Only {placesLeft} place{placesLeft === 1 ? "" : "s"} left!
           </div>
         ) : null}
