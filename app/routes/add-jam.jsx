@@ -1,5 +1,5 @@
 import { json, redirect } from "@remix-run/node";
-import { useFetcher } from "@remix-run/react";
+import { useFetcher, useNavigate } from "@remix-run/react";
 import mongoose from "mongoose";
 import { useEffect, useRef } from "react";
 import { format } from "date-fns"; // Ensure you have date-fns installed for formatting dates
@@ -19,6 +19,7 @@ export default function AddJam() {
   //   const { entries } = useLoaderData();
   const fetcher = useFetcher();
   const textareaRef = useRef(null);
+  const navigate = useNavigate();
 
   const isIdle = fetcher.state === "idle";
   const isInit = isIdle && fetcher.data == null;
@@ -29,6 +30,10 @@ export default function AddJam() {
       textareaRef.current.focus();
     }
   }, [isInit, isIdle]);
+
+  function handleCancel() {
+    navigate(-1);
+  }
 
   return (
     <>
@@ -128,9 +133,16 @@ export default function AddJam() {
               <div className="flex items-center justify-center space-x-4">
                 <button
                   type="submit"
-                  className="w-52 bg-[#4972b6]  hover:bg-blue-800 text-white font-bold m-2 py-2 px-4 rounded-md"
+                  className="w-40 bg-[#4972b6]  hover:bg-blue-800 text-white font-bold mt-2 py-2 px-4 rounded-md"
                 >
                   {fetcher.state === "submitting" ? "Saving..." : "Save"}
+                </button>
+                <button
+                  type="button"
+                  className="w-40 bg-slate-600 hover:bg-slate-700 text-white font-bold mt-2 py-2 px-4 rounded-md"
+                  onClick={handleCancel}
+                >
+                  Cancel
                 </button>
               </div>
             </fieldset>

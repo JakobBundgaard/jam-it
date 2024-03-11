@@ -42,7 +42,7 @@ export default function Profile() {
             hostedJams.map((jam) => {
               const placesLeft = jam.maxAttendees - jam.attendees.length;
               const badgeClasses =
-                "inline-block w-5/6 md:w-1/2 lg:w-1/3 xl:w-1/4 py-1 text-lg font-semibold rounded-full mb-2 mx-auto text-center";
+                "inline-block w-5/6 md:w-1/2 lg:w-1/3 xl:w-1/4 py-1 text-lg rounded-full mb-2 mx-auto text-center";
               return (
                 <Link
                   key={jam._id}
@@ -59,9 +59,9 @@ export default function Profile() {
                       </div>
                     ) : placesLeft <= 5 ? (
                       <div
-                        className={`${badgeClasses} bg-yellow-300 text-yellow-800`}
+                        className={`${badgeClasses} bg-[#e89633]  text-white`}
                       >
-                        Only {placesLeft} places left!
+                        {placesLeft} places left!
                       </div>
                     ) : null}
                     <h3 className="text-3xl font-bold text-gray-800">
