@@ -87,7 +87,7 @@ export default function Profile() {
 
         {/* Jams the user is attending */}
         <div className="entries-list">
-          <h2 className="text-2xl font-light text-center text-white mb-6">
+          <h2 className="text-3xl font-light text-center text-white mb-6">
             Jams You Are Attending
           </h2>
           {attendingJams.length > 0 ? (

@@ -76,6 +76,17 @@ export default function UpdateJam() {
                     />
                   </div>
                   <div className="mt-4">
+                    <input
+                      type="number"
+                      name="maxAttendees"
+                      placeholder="Maximum Attendees"
+                      defaultValue={jam.maxAttendees}
+                      required
+                      className="w-full text-gray-900 p-2 rounded"
+                      min="1"
+                    />
+                  </div>
+                  <div className="mt-4">
                     <textarea
                       ref={textareaRef}
                       placeholder="Type your entry..."
@@ -160,6 +171,7 @@ export async function action({ request, params }) {
   const date = formData.get("date");
   const title = formData.get("title");
   const text = formData.get("text");
+  const maxAttendees = parseInt(formData.get("maxAttendees"), 10);
 
   const location = {
     name: formData.get("location[name]"),
@@ -170,7 +182,7 @@ export async function action({ request, params }) {
 
   await mongoose.models.Entry.updateOne(
     { _id: params.jamId },
-    { $set: { date, title, text, location, userID: user._id } },
+    { $set: { date, title, maxAttendees, text, location, userID: user._id } },
   );
 
   return redirect("/profile");
