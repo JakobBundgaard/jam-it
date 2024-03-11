@@ -178,7 +178,7 @@ export default function Index() {
                 style={{ minHeight: "160px" }}
               >
                 {placesLeft <= 5 && placesLeft > 0 ? (
-                  <span className="inline-block px-3 py-1 text-lg font-semibold text-yellow-800 bg-[#e89633] rounded-full mb-2">
+                  <span className="inline-block px-3 py-1 text-lg text-white bg-[#e89633] rounded-full mb-2">
                     {placesLeft} place{placesLeft === 1 ? "" : "s"} left!
                   </span>
                 ) : null}
