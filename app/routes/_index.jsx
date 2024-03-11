@@ -178,19 +178,19 @@ export default function Index() {
                 style={{ minHeight: "160px" }}
               >
                 {placesLeft <= 5 && placesLeft > 0 ? (
-                  <span className="inline-block px-3 py-1 text-sm font-semibold text-yellow-800 bg-yellow-300 rounded-full mb-2">
-                    Only {placesLeft} place{placesLeft === 1 ? "" : "s"} left!
+                  <span className="inline-block px-3 py-1 text-lg font-semibold text-yellow-800 bg-[#e89633] rounded-full mb-2">
+                    {placesLeft} place{placesLeft === 1 ? "" : "s"} left!
                   </span>
                 ) : null}
-                <h3 className="text-xl font-bold text-gray-800">
+                <h3 className="text-3xl font-bold text-gray-800">
                   {entry.title}
                 </h3>
 
-                <p className="text-md text-gray-600">{entry.location.name}</p>
-                <p className="text-sm text-gray-500">
+                <p className="text-2xl text-gray-600">{entry.location.name}</p>
+                <p className="text-xl text-gray-500">
                   {new Date(entry.date).toLocaleString()}
                 </p>
-                <p className="text-sm text-gray-500">{entry.text}</p>
+                <p className="text-xl text-gray-500">{entry.text}</p>
               </div>
             </Link>
           );

@@ -42,7 +42,7 @@ export default function Profile() {
             hostedJams.map((jam) => {
               const placesLeft = jam.maxAttendees - jam.attendees.length;
               const badgeClasses =
-                "inline-block w-5/6 md:w-1/2 lg:w-1/3 xl:w-1/4 py-1 text-sm font-semibold rounded-full mb-2 mx-auto text-center";
+                "inline-block w-5/6 md:w-1/2 lg:w-1/3 xl:w-1/4 py-1 text-lg font-semibold rounded-full mb-2 mx-auto text-center";
               return (
                 <Link
                   key={jam._id}
@@ -64,14 +64,16 @@ export default function Profile() {
                         Only {placesLeft} places left!
                       </div>
                     ) : null}
-                    <h3 className="text-xl font-bold text-gray-800">
+                    <h3 className="text-3xl font-bold text-gray-800">
                       {jam.title}
                     </h3>
-                    <p className="text-md text-gray-600">{jam.location.name}</p>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-2xl text-gray-600">
+                      {jam.location.name}
+                    </p>
+                    <p className="text-xl text-gray-500">
                       {new Date(jam.date).toLocaleString()}
                     </p>
-                    <p className="text-sm text-gray-500">{jam.text}</p>
+                    <p className="text-xl text-gray-500">{jam.text}</p>
                   </div>
                 </Link>
               );
@@ -92,7 +94,7 @@ export default function Profile() {
             attendingJams.map((jam) => {
               const placesLeft = jam.maxAttendees - jam.attendees.length;
               const badgeClasses =
-                "inline-block w-5/6 md:w-1/2 lg:w-1/3 xl:w-1/4 py-1 text-sm p-2 rounded-full mb-2 mx-auto text-center";
+                "inline-block w-5/6 md:w-1/2 lg:w-1/3 xl:w-1/4 py-1 text-lg p-2 rounded-full mb-2 mx-auto text-center";
               return (
                 <Link
                   key={jam._id}
@@ -112,19 +114,20 @@ export default function Profile() {
                       <div
                         className={`${badgeClasses} bg-[#e89633] text-white`}
                       >
-                        Only {placesLeft} place{placesLeft === 1 ? "" : "s"}{" "}
-                        left!
+                        {placesLeft} place{placesLeft === 1 ? "" : "s"} left!
                       </div>
                     ) : null}
-                    <h3 className="text-xl font-bold text-gray-800">
+                    <h3 className="text-3xl font-bold text-gray-800">
                       {jam.title}
                     </h3>
 
-                    <p className="text-md text-gray-600">{jam.location.name}</p>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-2xl text-gray-600">
+                      {jam.location.name}
+                    </p>
+                    <p className="text-xl text-gray-500">
                       {new Date(jam.date).toLocaleString()}
                     </p>
-                    <p className="text-sm text-gray-500">{jam.text}</p>
+                    <p className="text-xl text-gray-500">{jam.text}</p>
                   </div>
                 </Link>
               );

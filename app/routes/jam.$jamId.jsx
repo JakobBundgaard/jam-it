@@ -85,7 +85,7 @@ export default function Jam() {
   console.log(jam);
 
   const badgeClasses =
-    "inline-block w-full md:w-3/4 lg:w-1/2 py-1 text-sm font-semibold rounded-full mb-4 mx-auto text-center";
+    "inline-block w-5/6 md:w-3/4 lg:w-1/2 py-1 text-lg font-semibold rounded-full mb-4 mx-auto text-center";
 
   return (
     <div className="flex flex-col max-w-4xl mx-auto my-10 p-6 text-center rounded-lg shadow-md ">
@@ -103,23 +103,22 @@ export default function Jam() {
             Only {placesLeft} place{placesLeft === 1 ? "" : "s"} left!
           </div>
         ) : null}
-        <h3 className="text-2xl font-bold text-gray-800">{jam.title}</h3>
+        <h3 className="text-3xl font-bold text-gray-800">{jam.title}</h3>
 
-        <p className="text-md text-gray-600">
-          <strong>Date:</strong> {new Date(jam.date).toLocaleString()}
-        </p>
-
-        <p className="text-md text-gray-600">
+        <p className="text-2xl text-gray-600">
           <strong>Location:</strong> {jam.location.name}, {jam.location.street}{" "}
           in {jam.location.city}
         </p>
-        <p className="text-sm text-gray-500">
+        <p className="text-xl text-gray-600">
+          <strong>Date:</strong> {new Date(jam.date).toLocaleString()}
+        </p>
+        <p className="text-xl text-gray-500">
           <strong>Details:</strong> {jam.text}
         </p>
-        <p className="text-sm text-gray-500">
+        <p className="text-xl text-gray-500">
           <strong>Host:</strong> {jam.userID.username}
         </p>
-        <div className="text-sm text-gray-500">
+        <div className="text-xl text-gray-500">
           <strong>Attendees:</strong>
           {jam.attendees.length > 0 ? (
             <ul className="list-disc list-inside">
@@ -131,7 +130,7 @@ export default function Jam() {
             <p>No attendees yet.</p>
           )}
         </div>
-        <p className="text-sm text-gray-500">
+        <p className="text-xl text-gray-500">
           <strong>Places Left:</strong> {placesLeft}
         </p>
       </div>
