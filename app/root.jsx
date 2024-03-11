@@ -9,6 +9,7 @@ import {
   isRouteErrorResponse,
   useRouteError,
   useLoaderData,
+  Link,
 } from "@remix-run/react";
 import styles from "./tailwind.css";
 import { authenticator } from "./services/auth.server";
@@ -78,6 +79,7 @@ export function ErrorBoundary() {
         ) : (
           <p>Something happened.</p>
         )}
+        <Link to="/">Go back home</Link>
 
         <Scripts />
       </body>

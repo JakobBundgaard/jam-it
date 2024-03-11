@@ -1,9 +1,10 @@
 import { json, redirect } from "@remix-run/node";
-import { useFetcher, useNavigate } from "@remix-run/react";
+import { useFetcher, useNavigate, useLoaderData } from "@remix-run/react";
 import mongoose from "mongoose";
 import { useEffect, useRef } from "react";
 import { format } from "date-fns"; // Ensure you have date-fns installed for formatting dates
 import { authenticator } from "../services/auth.server";
+import { sessionStorage } from "../services/session.server";
 import banner from "../images/banner.png";
 
 export async function loader({ request }) {
@@ -11,12 +12,25 @@ export async function loader({ request }) {
     failureRedirect: "/signin",
   });
 
+  const session = await sessionStorage.getSession(
+    request.headers.get("Cookie"),
+  );
+
+  const error = session.get("sessionErrorKey");
+
+  session.unset("sessionErrorKey");
+
+  const headers = new Headers({
+    "Set-Cookie": await sessionStorage.commitSession(session),
+  });
+
   const entries = await mongoose.models.Entry.find({});
-  return json({ entries });
+  return json({ entries, error }, { headers });
 }
 
 export default function AddJam() {
   //   const { entries } = useLoaderData();
+  const loaderData = useLoaderData();
   const fetcher = useFetcher();
   const textareaRef = useRef(null);
   const navigate = useNavigate();
@@ -145,6 +159,9 @@ export default function AddJam() {
                   Cancel
                 </button>
               </div>
+              <div className="error-message text-red-600 mt-2">
+                {loaderData?.error ? <p>{loaderData?.error?.message}</p> : null}
+              </div>
             </fieldset>
           </fetcher.Form>
         </div>
@@ -157,31 +174,109 @@ export async function action({ request }) {
   const user = await authenticator.isAuthenticated(request, {
     failureRedirect: "/signin",
   });
-  const formData = await request.formData();
-  const date = formData.get("date");
-  const title = formData.get("title");
-  const text = formData.get("text");
-  const maxAttendees = parseInt(formData.get("maxAttendees"), 10);
+  const session = await sessionStorage.getSession(
+    request.headers.get("Cookie"),
+  );
 
-  // Manually construct the location object
-  const location = {
-    name: formData.get("location[name]"),
-    street: formData.get("location[street]"),
-    zip: parseInt(formData.get("location[zip]"), 10), // Ensure zip is a number
-    city: formData.get("location[city]"),
-  };
+  try {
+    const formData = await request.formData();
+    const date = formData.get("date");
+    const title = formData.get("title");
+    const text = formData.get("text");
+    const maxAttendees = parseInt(formData.get("maxAttendees"), 10);
 
-  // Construct the jam object with the location object included
-  const jam = {
-    date,
-    title,
-    maxAttendees,
-    text,
-    location,
-    userID: user._id, // Ensure this matches your schema field for the user reference
-  };
+    // Manually construct the location object
+    const location = {
+      name: formData.get("location[name]"),
+      street: formData.get("location[street]"),
+      zip: parseInt(formData.get("location[zip]"), 10), // Ensure zip is a number
+      city: formData.get("location[city]"),
+    };
 
-  await mongoose.models.Entry.create(jam);
+    // Construct the jam object with the location object included
+    const jam = {
+      date,
+      title,
+      maxAttendees,
+      text,
+      location,
+      userID: user._id, // Ensure this matches your schema field for the user reference
+    };
 
-  return redirect("/profile");
+    if (!date || title || !maxAttendees || !text || !location || !user._id) {
+      return json(
+        { error: "All fileds required" },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    const result = await mongoose.models.Entry.create(jam);
+    if (result) {
+      return redirect("/profile", {
+        headers: {
+          "Set-Cookie": await sessionStorage.destroySession(session),
+        },
+      });
+    }
+  } catch (error) {
+    let errorMessage = "Failed to add jam, please try again.";
+    // Check if the error is a Mongoose validation error
+    if (error.name === "ValidationError") {
+      const errors = error.errors;
+      // Collect all validation messages into a single string or an array, depending on your preference
+      errorMessage = Object.values(errors)
+        .map((err) => err.message)
+        .join(", ");
+    }
+
+    session.flash("sessionErrorKey", { message: errorMessage });
+    //   return redirect("/profile");
+    // } catch (error) {
+    //   // Catch validation errors and other errors here
+    //   const session = await sessionStorage.getSession(
+    //     request.headers.get("Cookie"),
+    //   );
+    //   session.flash("sessionErrorKey", error.message); // Using flash to show the message once
+
+    return redirect("/add-jam", {
+      headers: {
+        "Set-Cookie": await sessionStorage.commitSession(session),
+      },
+    });
+  }
 }
+
+// export async function action({ request }) {
+//   const user = await authenticator.isAuthenticated(request, {
+//     failureRedirect: "/signin",
+//   });
+//   const formData = await request.formData();
+//   const date = formData.get("date");
+//   const title = formData.get("title");
+//   const text = formData.get("text");
+//   const maxAttendees = parseInt(formData.get("maxAttendees"), 10);
+
+//   // Manually construct the location object
+//   const location = {
+//     name: formData.get("location[name]"),
+//     street: formData.get("location[street]"),
+//     zip: parseInt(formData.get("location[zip]"), 10), // Ensure zip is a number
+//     city: formData.get("location[city]"),
+//   };
+
+//   // Construct the jam object with the location object included
+//   const jam = {
+//     date,
+//     title,
+//     maxAttendees,
+//     text,
+//     location,
+//     userID: user._id, // Ensure this matches your schema field for the user reference
+//   };
+
+//   await mongoose.models.Entry.create(jam);
+
+//   return redirect("/profile");
+// }

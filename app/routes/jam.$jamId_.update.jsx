@@ -6,7 +6,7 @@ import { authenticator } from "../services/auth.server";
 import banner from "../images/banner.png";
 
 export async function loader({ params, request }) {
-  await authenticator.isAuthenticated(request, {
+  const currentUser = await authenticator.isAuthenticated(request, {
     failureRedirect: "/signin",
   });
 
@@ -15,6 +15,11 @@ export async function loader({ params, request }) {
   })
     .populate("attendees", "username") // This populates the `attendees` field, retrieving the `username` of each attendee
     .exec();
+
+  if (currentUser._id !== jam.userID) {
+    throw new Response(null, { status: 401, message: "not autherized" });
+  }
+
   return json({ jam });
 }
 
