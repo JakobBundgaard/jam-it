@@ -1,6 +1,7 @@
 import { Link, useLoaderData } from "@remix-run/react";
 import { authenticator } from "../services/auth.server";
 import mongoose from "mongoose";
+import banner from "../images/banner.png";
 
 export async function loader({ request }) {
   const user = await authenticator.isAuthenticated(request, {
@@ -26,12 +27,15 @@ export default function Profile() {
 
   return (
     <div>
+      <div>
+        <img className="w-full" src={banner} alt="" />
+      </div>
       <div className="flex flex-col max-w-4xl mx-auto my-10 p-6 text-center bg-slate-500 rounded-lg shadow-md">
-        <h1 className="text-4xl font-bold text-center text-gray-800 mb-4">
-          Welcome {user.username}
+        <h1 className="text-5xl text-center text-gray-800 mb-4 uppercase">
+          WELCOME {user.username}
         </h1>
         <div className="entries-list">
-          <h2 className="text-2xl font-light text-center text-gray-700 mb-6">
+          <h2 className="text-3xl font-light text-center text-gray-700 mb-6">
             Your Jams
           </h2>
           {hostedJams.length > 0 ? (

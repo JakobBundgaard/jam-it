@@ -44,7 +44,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="font-poppins">
+      <body className="font-poppins bg-[#050c24]">
         <Nav isAuthenticated={user} />
         <Outlet />
         <ScrollRestoration />

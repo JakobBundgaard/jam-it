@@ -1,5 +1,5 @@
 import { NavLink, useFetcher } from "@remix-run/react";
-import logo from "../images/logo.png";
+// import logo from "../images/logo.png";
 
 export default function Nav({ isAuthenticated }) {
   const fetcher = useFetcher();
@@ -9,14 +9,12 @@ export default function Nav({ isAuthenticated }) {
   };
 
   return (
-    <nav className="sticky top-0 z-50 w-full mx-auto p-6 bg-gradient-to-r from-gray-700 to-black shadow-md flex justify-around items-center">
-      <img src={logo} alt="Logo" className="w-8" />
+    <nav className="sticky top-0 z-50 w-full text-xl mx-auto p-6 bg-[#050c24] shadow-md flex justify-around items-center uppercase">
+      {/* <img src={logo} alt="Logo" className="w-8" /> */}
       <NavLink
         to="/"
         className={({ isActive }) =>
-          isActive
-            ? "text-slate-400 font-bold"
-            : "text-slate-200 hover:text-slate-400"
+          isActive ? "text-slate-400 " : "text-slate-200 hover:text-slate-400"
         }
       >
         Jams
@@ -28,7 +26,7 @@ export default function Nav({ isAuthenticated }) {
             to="/add-jam"
             className={({ isActive }) =>
               isActive
-                ? "text-slate-400 font-bold"
+                ? "text-slate-400"
                 : "text-slate-200 hover:text-slate-400"
             }
           >
@@ -38,7 +36,7 @@ export default function Nav({ isAuthenticated }) {
             to="/profile"
             className={({ isActive }) =>
               isActive
-                ? "text-slate-400 font-bold"
+                ? "text-slate-400"
                 : "text-slate-200 hover:text-slate-400"
             }
           >
@@ -46,7 +44,7 @@ export default function Nav({ isAuthenticated }) {
           </NavLink>
           <button
             onClick={handleLogout}
-            className="text-slate-200 hover:text-slate-400"
+            className="text-slate-200 hover:text-slate-400 uppercase"
           >
             Logout
           </button>
@@ -55,9 +53,7 @@ export default function Nav({ isAuthenticated }) {
         <NavLink
           to="/signin"
           className={({ isActive }) =>
-            isActive
-              ? "text-slate-400 font-bold"
-              : "text-slate-200 hover:text-slate-400"
+            isActive ? "text-slate-400 " : "text-slate-200 hover:text-slate-400"
           }
         >
           Sign In
