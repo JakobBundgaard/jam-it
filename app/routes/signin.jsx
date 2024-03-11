@@ -33,17 +33,20 @@ export default function SignIn() {
       </div>
       <div
         id="sign-in-page"
-        className="flex flex-col max-w-xl mx-auto my-10 p-6 text-center bg-slate-500 rounded-lg shadow-md"
+        className="flex flex-col max-w-xl mx-auto my-10 p-6 text-center  rounded-lg shadow-md"
       >
         <div>
-          <h1 className="text-4xl text-gray-800 mb-4 uppercase">Sign In</h1>
+          <h1 className="text-4xl text-white mb-4 uppercase">Sign In</h1>
           <Form
             id="sign-in-form"
             method="post"
             className="flex flex-col items-center justify-center"
           >
             <div className="mb-4 w-full px-6">
-              <label htmlFor="email" className="block text-left mb-1">
+              <label
+                htmlFor="email"
+                className="block text-left mb-1 text-white"
+              >
                 Mail
               </label>
               <input
@@ -53,11 +56,14 @@ export default function SignIn() {
                 aria-label="email"
                 placeholder="Type your email..."
                 required
-                className="text-gray-900 w-full p-2 rounded-md"
+                className="text-gray-900 border w-full p-2 rounded-md"
               />
             </div>
             <div className="mb-4 w-full px-6">
-              <label htmlFor="password" className="block text-left mb-1">
+              <label
+                htmlFor="password"
+                className="block text-left mb-1 text-white"
+              >
                 Password
               </label>
               <input
@@ -68,21 +74,21 @@ export default function SignIn() {
                 placeholder="Type your password..."
                 autoComplete="current-password"
                 required
-                className="text-gray-900 w-full p-2 rounded-md"
+                className="text-gray-900 border w-full p-2 rounded-md"
               />
             </div>
-            <button className="w-52 bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-md">
+            <button className="w-52 bg-[#4972b6] hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-md">
               Sign In
             </button>
             <div className="error-message text-red-600 mt-2">
               {loaderData?.error ? <p>{loaderData?.error?.message}</p> : null}
             </div>
           </Form>
-          <p className="mt-6">
+          <p className="mt-6 text-white">
             Not a member yet?{" "}
             <Link
               to="/signup"
-              className="text-blue-800 hover:text-blue-900 underline"
+              className="text-[#4972b6] hover:text-blue-900 underline"
             >
               Signup here...
             </Link>

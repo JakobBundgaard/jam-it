@@ -1,4 +1,4 @@
-import { Form, useLoaderData } from "@remix-run/react";
+import { Form, useLoaderData, Link } from "@remix-run/react";
 import { authenticator } from "../services/auth.server";
 import {
   getSession,
@@ -37,17 +37,20 @@ export default function SignUp() {
 
       <div
         id="sign-up-page"
-        className="flex flex-col max-w-xl mx-auto my-10 p-6 text-center bg-slate-500 rounded-lg shadow-md"
+        className="flex flex-col max-w-xl mx-auto my-10 p-6 text-center  rounded-lg shadow-md"
       >
         <div>
-          <h1 className="text-4xl text-gray-800 mb-4 uppercase">Sign Up</h1>
+          <h1 className="text-4xl  mb-4 text-white uppercase">Sign Up</h1>
           <Form
             id="sign-up-form"
             method="post"
             className="flex flex-col items-center justify-center"
           >
             <div className="mb-4 w-full px-6">
-              <label htmlFor="username" className="block text-left mb-1">
+              <label
+                htmlFor="username"
+                className="block text-left mb-1 text-white"
+              >
                 Username
               </label>
 
@@ -58,11 +61,14 @@ export default function SignUp() {
                 aria-label="username"
                 placeholder="Type your user name..."
                 required
-                className="text-gray-900 w-full p-2 rounded-md"
+                className="text-gray-900 border w-full p-2 rounded-md"
               />
             </div>
             <div className="mb-4 w-full px-6">
-              <label htmlFor="email" className="block text-left mb-1">
+              <label
+                htmlFor="email"
+                className="block text-left mb-1 text-white"
+              >
                 Mail
               </label>
 
@@ -73,11 +79,14 @@ export default function SignUp() {
                 aria-label="mail"
                 placeholder="Type your mail..."
                 required
-                className="text-gray-900 w-full p-2 rounded-md"
+                className="text-gray-900 border w-full p-2 rounded-md"
               />
             </div>
             <div className="mb-4 w-full px-6">
-              <label htmlFor="password" className="block text-left mb-1">
+              <label
+                htmlFor="password"
+                className="block text-left mb-1 text-white"
+              >
                 Password
               </label>
 
@@ -88,12 +97,15 @@ export default function SignUp() {
                 aria-label="password"
                 placeholder="Type your password..."
                 autoComplete="current-password"
-                className="text-gray-900 w-full p-2 rounded-md"
+                className="text-gray-900 border w-full p-2 rounded-md"
               />
             </div>
 
             <div className="mb-4 w-full px-6">
-              <label htmlFor="repeatPassword" className="block text-left mb-1">
+              <label
+                htmlFor="repeatPassword"
+                className="block text-left mb-1 text-white"
+              >
                 Repeat Password
               </label>
 
@@ -104,11 +116,11 @@ export default function SignUp() {
                 aria-label="repeatPassword"
                 placeholder="Repeat your password..."
                 autoComplete="new-password" // To avoid autofilling the password
-                className="text-gray-900 w-full p-2 rounded-md"
+                className="text-gray-900 border w-full p-2 rounded-md"
                 required
               />
             </div>
-            <button className="w-52 bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-md">
+            <button className="w-52 bg-[#4972b6] hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-md">
               Sign Up
             </button>
 
@@ -116,6 +128,15 @@ export default function SignUp() {
               {loaderData?.error ? <p>{loaderData?.error?.message}</p> : null}
             </div>
           </Form>
+          <p className="mt-6 text-white">
+            Already a member?{" "}
+            <Link
+              to="/signin"
+              className="text-[#4972b6] hover:text-blue-900 underline"
+            >
+              Sign in here...
+            </Link>
+          </p>
         </div>
       </div>
     </>
