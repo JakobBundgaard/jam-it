@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import { useEffect, useRef, useState } from "react";
 import { authenticator } from "../services/auth.server";
 import { useSearchParams } from "@remix-run/react";
+import banner from "../images/banner.png";
 
 export async function loader({ request }) {
   const user = await authenticator.isAuthenticated(request);
@@ -101,76 +102,100 @@ export default function Index() {
   }, [isInit, isIdle]);
 
   return (
-    <div className="max-w-2xl mx-auto my-10 p-6 text-center bg-slate-500 rounded-lg shadow-md">
-      <h1 className="text-5xl text-center p-3">Welcome To Jam-It</h1>
-      <h2 className="text-3xl italic text-center pb-1">
-        Your Portal For Jam Events
-      </h2>
+    <>
+      <div>
+        <img className="w-full" src={banner} alt="" />
+      </div>
+      <div
+        className="flex flex-col max-w-4xl mx-auto my-10 p-6 text-center rounded-lg shadow-md"
+        style={{ maxWidth: "768px" }}
+      >
+        <h1 className="text-5xl  text-center text-white mb-4">
+          WELCOME TO JAM-IT
+        </h1>
+        <h2 className="text-3xl font-light text-center text-white mb-6">
+          Your Portal For Jam Events
+        </h2>
 
-      <form className="search-form" onSubmit={handleSearch}>
-        <input
-          type="text"
-          name="eventName"
-          placeholder="Search by event name"
-          className="m-2 p-1 rounded"
-          value={eventName}
-          onChange={(e) => setEventName(e.target.value)}
-        />
-        <input
-          type="text"
-          name="location"
-          placeholder="Search by location"
-          className="m-2 p-1 rounded"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-        />
-        <input
-          type="date"
-          name="date"
-          placeholder="Search by date"
-          className="m-2 p-1 rounded"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-        />
-        <button
-          type="submit"
-          className="w-40 bg-slate-600 hover:bg-slate-700 text-white font-bold m-2 py-2 px-4 rounded-md"
+        <form
+          className="flex flex-wrap justify-center gap-4 mb-8"
+          onSubmit={handleSearch}
         >
-          Search
-        </button>
-        <button
-          type="button"
-          onClick={handleReset}
-          className="w-40 bg-slate-600 hover:bg-slate-700 text-white font-bold m-2 py-2 px-4 rounded-md"
-        >
-          Reset
-        </button>
-      </form>
-
-      {entries.map((entry) => {
-        const placesLeft = entry.maxAttendees - entry.attendees.length;
-        return (
-          <Link key={entry._id} to={`/jam/${entry._id}`} className="entry-link">
-            <div
-              key={entry._id}
-              className="bg-slate-300 mt-4 rounded-lg shadow-md"
+          <div className="flex gap-4">
+            <input
+              type="text"
+              name="eventName"
+              placeholder="Search by event name"
+              className="flex-1 min-w-[200px] p-2 border rounded border-gray-300"
+              value={eventName}
+              onChange={(e) => setEventName(e.target.value)}
+            />
+            <input
+              type="text"
+              name="location"
+              placeholder="Search by location"
+              className="flex-1 min-w-[200px] p-2 border rounded border-gray-300"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+            />
+            <input
+              type="date"
+              name="date"
+              placeholder="Search by date"
+              className="flex-1 min-w-[200px] p-2 border rounded border-gray-300"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+          </div>
+          <div className="flex gap-4">
+            <button
+              type="submit"
+              className="w-40 px-6 py-2 bg-[#4972b6] text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
             >
-              {placesLeft <= 5 && placesLeft > 0 ? (
-                <div className="places-left-badge bg-yellow-500 text-white p-2 rounded">
-                  Only {placesLeft} place{placesLeft === 1 ? "" : "s"} left!
-                </div>
-              ) : null}
-              <p className="text-2xl p-1">{entry.title}</p>
+              Search
+            </button>
+            <button
+              type="button"
+              onClick={handleReset}
+              className="w-40 px-6 py-2 bg-gray-300 text-gray-700 font-semibold rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50"
+            >
+              Reset
+            </button>
+          </div>
+        </form>
 
-              <p className="text-xl italic text-gray-900 p-1">
-                {entry.location.name}
-              </p>
-              <p className="p-1">{new Date(entry.date).toLocaleString()}</p>
-              <p className="text-gray-500 p-1">{entry.text}</p>
-            </div>
-          </Link>
-        );
-      })}
-    </div>
+        {entries.map((entry) => {
+          const placesLeft = entry.maxAttendees - entry.attendees.length;
+          return (
+            <Link
+              key={entry._id}
+              to={`/jam/${entry._id}`}
+              className="entry-link"
+            >
+              <div
+                key={entry._id}
+                className="block bg-gray-50 hover:bg-blue-50 focus:bg-blue-100 transition-colors duration-150 rounded-lg shadow px-6 py-4 mb-4 max-w-xl mx-auto"
+                style={{ minHeight: "160px" }}
+              >
+                {placesLeft <= 5 && placesLeft > 0 ? (
+                  <span className="inline-block px-3 py-1 text-lg text-white bg-[#e89633] rounded-full mb-2">
+                    {placesLeft} place{placesLeft === 1 ? "" : "s"} left!
+                  </span>
+                ) : null}
+                <h3 className="text-3xl font-bold text-gray-800">
+                  {entry.title}
+                </h3>
+
+                <p className="text-2xl text-gray-600">{entry.location.name}</p>
+                <p className="text-xl text-gray-500">
+                  {new Date(entry.date).toLocaleString()}
+                </p>
+                <p className="text-xl text-gray-500">{entry.text}</p>
+              </div>
+            </Link>
+          );
+        })}
+      </div>
+    </>
   );
 }

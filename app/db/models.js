@@ -53,19 +53,27 @@ const entrySchema = new Schema(
     title: {
       type: String,
       required: true,
+      minlength: [5, "Title must be at least 5 characters long"],
+      maxlength: [30, "title cannot be more than 30 characters long"],
     },
     text: {
       type: String,
       required: true,
+      minlength: [5, "Text must be at least 5 characters long"],
+      maxlength: [50, "Text cannot be more than 30 characters long"],
     },
     location: {
       name: {
         type: String,
         required: true,
+        minlength: [3, "Name must be at least 5 characters long"],
+        maxlength: [50, "Name cannot be more than 30 characters long"],
       },
       street: {
         type: String,
         required: true,
+        minlength: [3, "Street must be at least 5 characters long"],
+        maxlength: [30, "Street cannot be more than 30 characters long"],
       },
       zip: {
         type: Number,
@@ -74,6 +82,8 @@ const entrySchema = new Schema(
       city: {
         type: String,
         required: true,
+        minlength: [3, "City must be at least 5 characters long"],
+        maxlength: [30, "City cannot be more than 30 characters long"],
       },
     },
     userID: {

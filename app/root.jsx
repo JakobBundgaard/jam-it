@@ -9,10 +9,12 @@ import {
   isRouteErrorResponse,
   useRouteError,
   useLoaderData,
+  Link,
 } from "@remix-run/react";
 import styles from "./tailwind.css";
 import { authenticator } from "./services/auth.server";
 import Nav from "./components/Nav";
+import icon from "./images/favicon.png";
 
 export const links = () => [
   {
@@ -38,10 +40,12 @@ export default function App() {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href={icon} type="image/png"></link>
+
         <Meta />
         <Links />
       </head>
-      <body className="font-poppins">
+      <body className="font-poppins bg-[#050c24]">
         <Nav isAuthenticated={user} />
         <Outlet />
         <ScrollRestoration />
@@ -75,6 +79,7 @@ export function ErrorBoundary() {
         ) : (
           <p>Something happened.</p>
         )}
+        <Link to="/">Go back home</Link>
 
         <Scripts />
       </body>
