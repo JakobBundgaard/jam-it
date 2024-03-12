@@ -2,7 +2,7 @@ import { json, redirect } from "@remix-run/node";
 import { useFetcher, useNavigate, useLoaderData } from "@remix-run/react";
 import mongoose from "mongoose";
 import { useEffect, useRef } from "react";
-import { format } from "date-fns";
+// import { format } from "date-fns";
 import { authenticator } from "../services/auth.server";
 import { sessionStorage } from "../services/session.server";
 import banner from "../images/banner.png";
@@ -69,7 +69,7 @@ export default function AddJam() {
                     name="date"
                     required
                     className="text-gray-900 p-2 rounded"
-                    defaultValue={format(new Date(), "yyyy-MM-dd'T'HH:mm")}
+                    defaultValue={new Date()}
                   />
                 </div>
 

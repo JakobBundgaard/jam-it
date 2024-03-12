@@ -71,7 +71,11 @@ export default function Profile() {
                       {jam.location.name}
                     </p>
                     <p className="text-xl text-gray-500">
-                      {new Date(jam.date).toLocaleString()}
+                      {new Intl.DateTimeFormat("da-DK", {
+                        timeZone: "UTC",
+                        dateStyle: "full",
+                        timeStyle: "short",
+                      }).format(new Date(jam.date))}
                     </p>
                     <p className="text-xl text-gray-500">{jam.text}</p>
                   </div>
@@ -124,7 +128,11 @@ export default function Profile() {
                       {jam.location.name}
                     </p>
                     <p className="text-xl text-gray-500">
-                      {new Date(jam.date).toLocaleString()}
+                      {new Intl.DateTimeFormat("da-DK", {
+                        timeZone: "UTC",
+                        dateStyle: "full",
+                        timeStyle: "short",
+                      }).format(new Date(jam.date))}
                     </p>
                     <p className="text-xl text-gray-500">{jam.text}</p>
                   </div>

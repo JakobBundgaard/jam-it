@@ -186,7 +186,11 @@ export default function Index() {
 
                 <p className="text-2xl text-gray-600">{entry.location.name}</p>
                 <p className="text-xl text-gray-500">
-                  {new Date(entry.date).toLocaleString()}
+                  {new Intl.DateTimeFormat("da-DK", {
+                    timeZone: "UTC",
+                    dateStyle: "full",
+                    timeStyle: "short",
+                  }).format(new Date(entry.date))}
                 </p>
                 <p className="text-xl text-gray-500">{entry.text}</p>
               </div>

@@ -4,6 +4,7 @@ import { useRef } from "react";
 import mongoose from "mongoose";
 import { authenticator } from "../services/auth.server";
 import banner from "../images/banner.png";
+// import { format } from "date-fns";
 
 export async function loader({ params, request }) {
   const currentUser = await authenticator.isAuthenticated(request, {
@@ -29,10 +30,18 @@ export default function UpdateJam() {
   const textareaRef = useRef(null);
   const navigate = useNavigate();
 
-  const eventDate = new Date(jam.date);
-  const timeZoneOffset = eventDate.getTimezoneOffset();
-  eventDate.setMinutes(eventDate.getMinutes() - timeZoneOffset);
-  const localDateTimeString = eventDate.toISOString().slice(0, 16);
+  // const eventDate = new Date(jam.date);
+
+  console.log(jam.date);
+
+  // const date = new Intl.DateTimeFormat("da-DK", {
+  //   dateStyle: "full",
+  //   timeZone: "UTC",
+  // }).format(eventDate);
+
+  // const timeZoneOffset = eventDate.getTimezoneOffset();
+  // eventDate.setMinutes(eventDate.getMinutes() - timeZoneOffset);
+  // const localDateTimeString = eventDate.toISOString().slice(0, 16);
 
   function handleCancel() {
     navigate(-1);
@@ -65,7 +74,7 @@ export default function UpdateJam() {
                       name="date"
                       required
                       className="text-gray-900 border w-full p-2 rounded-md"
-                      defaultValue={localDateTimeString}
+                      defaultValue={jam.date.split("Z")[0]}
                     />
                   </div>
 
@@ -172,7 +181,7 @@ export async function action({ request, params }) {
     failureRedirect: "/signin",
   });
   const formData = await request.formData();
-  const date = formData.get("date");
+  const date = formData.get("date") + "Z";
   const title = formData.get("title");
   const text = formData.get("text");
   const maxAttendees = parseInt(formData.get("maxAttendees"), 10);

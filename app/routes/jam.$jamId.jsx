@@ -112,7 +112,12 @@ export default function Jam() {
             {jam.location.street} in {jam.location.city}
           </p>
           <p className="text-xl text-gray-600">
-            <strong>Date:</strong> {new Date(jam.date).toLocaleString()}
+            <strong>Date:</strong>{" "}
+            {new Intl.DateTimeFormat("da-DK", {
+              timeZone: "UTC",
+              dateStyle: "full",
+              timeStyle: "short",
+            }).format(new Date(jam.date))}
           </p>
           <p className="text-xl text-gray-500">
             <strong>Details:</strong> {jam.text}
