@@ -211,11 +211,7 @@ export async function action({ request }) {
 
     const result = await mongoose.models.Entry.create(jam);
     if (result) {
-      return redirect("/profile", {
-        headers: {
-          "Set-Cookie": await sessionStorage.destroySession(session),
-        },
-      });
+      return redirect("/profile");
     }
   } catch (error) {
     let errorMessage = "Failed to add jam, please try again.";
