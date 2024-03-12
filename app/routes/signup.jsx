@@ -115,7 +115,7 @@ export default function SignUp() {
                 name="repeatPassword"
                 aria-label="repeatPassword"
                 placeholder="Repeat your password..."
-                autoComplete="new-password" // To avoid autofilling the password
+                autoComplete="new-password"
                 className="text-gray-900 border w-full p-2 rounded-md"
                 required
               />
@@ -151,7 +151,6 @@ export async function action({ request }) {
   const repeatPassword = formData.get("repeatPassword");
   const session = await getSession(request.headers.get("Cookie"));
 
-  // Check if passwords match
   if (password !== repeatPassword) {
     session.flash("sessionErrorKey", { message: "Passwords do not match" });
     return redirect("/signup", {
@@ -174,10 +173,8 @@ export async function action({ request }) {
     }
   } catch (error) {
     let errorMessage = "Failed to sign up, please try again.";
-    // Check if the error is a Mongoose validation error
     if (error.name === "ValidationError") {
       const errors = error.errors;
-      // Collect all validation messages into a single string or an array, depending on your preference
       errorMessage = Object.values(errors)
         .map((err) => err.message)
         .join(", ");

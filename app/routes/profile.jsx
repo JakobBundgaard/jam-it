@@ -85,7 +85,6 @@ export default function Profile() {
           )}
         </div>
 
-        {/* Jams the user is attending */}
         <div className="entries-list">
           <h2 className="text-3xl font-light text-center text-white mb-6">
             Jams You Are Attending

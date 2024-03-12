@@ -35,10 +35,9 @@ export async function loader({ request }) {
   }
 
   if (user) {
-    query.userID = { $ne: user._id }; // Make sure userID is the correct field name
+    query.userID = { $ne: user._id };
   }
 
-  // Exclude jams the user is attending
   if (user) {
     query.attendees = { $nin: [user._id] };
   }
@@ -83,7 +82,6 @@ export default function Index() {
     if (location) searchParams.append("location", location);
     if (date) searchParams.append("date", date);
 
-    // Redirect to the current page with the search parameters
     setSearchParams(searchParams, { replace: true });
   }
 

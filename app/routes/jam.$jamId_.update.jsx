@@ -13,7 +13,7 @@ export async function loader({ params, request }) {
   const jam = await mongoose.models.Entry.findOne({
     _id: params.jamId,
   })
-    .populate("attendees", "username") // This populates the `attendees` field, retrieving the `username` of each attendee
+    .populate("attendees", "username")
     .exec();
 
   if (currentUser._id != jam.userID) {
@@ -29,7 +29,6 @@ export default function UpdateJam() {
   const textareaRef = useRef(null);
   const navigate = useNavigate();
 
-  // Adjust date for local timezone to use as defaultValue
   const eventDate = new Date(jam.date);
   const timeZoneOffset = eventDate.getTimezoneOffset();
   eventDate.setMinutes(eventDate.getMinutes() - timeZoneOffset);

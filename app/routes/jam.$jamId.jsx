@@ -53,28 +53,24 @@ export default function Jam() {
   async function handleAttend(event) {
     event.preventDefault();
 
-    // Prepare the data to be sent
     const formData = new FormData();
     formData.append("_action", "attend");
 
-    // Use fetcher to submit the form data
     fetcher.submit(formData, {
       method: "post",
-      action: `/jam/${jam._id}`, // Your route that handles the post request
+      action: `/jam/${jam._id}`,
     });
   }
 
   async function handleUnattend(event) {
     event.preventDefault();
 
-    // Prepare the data to be sent
     const formData = new FormData();
     formData.append("_action", "unattend");
 
-    // Use fetcher to submit the form data
     fetcher.submit(formData, {
       method: "post",
-      action: `/jam/${jam._id}`, // Your route that handles the post request
+      action: `/jam/${jam._id}`,
     });
   }
 
@@ -200,7 +196,6 @@ export const action = async ({ request, params }) => {
   if (actionType === "attend") {
     const user = await authenticator.isAuthenticated(request);
     if (!user) {
-      // Handle the case where the user is not authenticated
       return redirect("/signin");
     }
 
@@ -212,19 +207,15 @@ export const action = async ({ request, params }) => {
       return null;
     }
 
-    // Check if the user is already an attendee
     if (jam.attendees.includes(user._id)) {
       // Maybe you want to send a message back to the user that they're already attending
       return null;
     }
 
-    // Add user to attendees
     jam.attendees.push(user._id);
     await jam.save();
 
     if (jam.attendees.length >= jam.maxAttendees) {
-      // Optionally, return a message indicating the event is full
-      // You might need to implement a mechanism to display this message to the user
       return redirect(`/profile`, {
         state: { message: "This jam is full." },
       });
@@ -248,7 +239,6 @@ export const action = async ({ request, params }) => {
       return null;
     }
 
-    // Remove the user from attendees
     jam.attendees = jam.attendees.filter(
       (attendeeId) => attendeeId.toString() !== user._id.toString(),
     );
