@@ -79,7 +79,7 @@ export function ErrorBoundary() {
         ) : (
           <p>Something happened.</p>
         )}
-        <Link to="/">Go back home</Link>
+        <Link to="/">Go to homepage</Link>
 
         <Scripts />
       </body>

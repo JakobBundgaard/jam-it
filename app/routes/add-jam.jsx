@@ -203,7 +203,7 @@ export async function action({ request }) {
       userID: user._id, // Ensure this matches your schema field for the user reference
     };
 
-    if (!date || title || !maxAttendees || !text || !location || !user._id) {
+    if (!date || !title || !maxAttendees || !text || !location || !user._id) {
       return json(
         { error: "All fileds required" },
         {

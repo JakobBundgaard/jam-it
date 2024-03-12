@@ -191,17 +191,3 @@ export async function action({ request }) {
     });
   }
 }
-
-// catch (error) {
-//     // Handle any errors such as duplicate username or email, etc.
-//     session.flash("sessionErrorKey", {
-//       message: "Failed to sign up, please try again.",
-//     });
-//     // session.unset("sessionErrorKey");
-//     return redirect("/signup", {
-//       headers: {
-//         "Set-Cookie": await commitSession(session),
-//       },
-//     });
-//   }
-// }

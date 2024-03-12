@@ -8,7 +8,7 @@ export default function Nav({ isAuthenticated }) {
   };
 
   return (
-    <nav className="sticky top-0 z-50 w-full text-xl mx-auto p-6 bg-[#050c24] shadow-md flex justify-center md:justify-end items-center uppercase gap-x-10">
+    <nav className="sticky top-0 z-50 w-full text-xl  p-6 bg-[#050c24] shadow-md flex justify-center  items-center uppercase gap-4 sm:gap-8 md:gap-12 lg:gap-44">
       <NavLink
         to="/"
         className={({ isActive }) =>

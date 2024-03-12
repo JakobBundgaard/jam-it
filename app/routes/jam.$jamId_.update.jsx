@@ -16,7 +16,7 @@ export async function loader({ params, request }) {
     .populate("attendees", "username") // This populates the `attendees` field, retrieving the `username` of each attendee
     .exec();
 
-  if (currentUser._id !== jam.userID) {
+  if (currentUser._id != jam.userID) {
     throw new Response(null, { status: 401, message: "not autherized" });
   }
 
